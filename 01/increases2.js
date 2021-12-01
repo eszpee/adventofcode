@@ -1,20 +1,8 @@
 'use strict';
-function compare(arr) {
-    let sum1=0;
-    let sum2=0;
-    for (let i=0; i<=2; i++) {
-        sum1 += arr[i];
-    }
-    for (let i=1; i<=3; i++) {
-        sum2 += arr[i];
-    }
-    if (sum2 > sum1) {
-        return true;
-    }
-    else {
-        return false;
-    }
+const sum = (prev,curr) => prev+curr;
 
+function compare(arr) {
+    return (arr.slice(1,4).reduce(sum) > arr.slice(0,3).reduce(sum));
 } 
 
 let measures = new Array();

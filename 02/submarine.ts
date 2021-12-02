@@ -2,22 +2,25 @@
 class Submarine {
     horizontal: number;
     depth: number;
+    aim: number;
    
-    constructor(horizontal: number, depth: number) {
+    constructor(horizontal: number, depth: number, aim: number) {
       this.horizontal = horizontal;
       this.depth = depth;
+      this.aim = aim;
     }
 
     forward(steps: number): void {
         this.horizontal += steps;
+        this.depth += this.aim * steps;
     }
 
     up(steps: number): void {
-        this.depth -= steps;
+        this.aim -= steps;
     }
 
     down(steps: number): void {
-        this.depth += steps;
+        this.aim += steps;
     }
 
     position(): number {
@@ -43,6 +46,6 @@ function moveSub(line: string): void {
     }
 }
 
-let subM = new Submarine(0,0);
+let subM = new Submarine(0,0,0);
 require('fs').readFileSync('/Users/eszpee/projects/adventofcode2021/02/input.txt', 'utf-8').split(/\r?\n/).forEach(moveSub);
 console.log(subM.position());

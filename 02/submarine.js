@@ -1,17 +1,19 @@
 'use strict';
 var Submarine = /** @class */ (function () {
-    function Submarine(horizontal, depth) {
+    function Submarine(horizontal, depth, aim) {
         this.horizontal = horizontal;
         this.depth = depth;
+        this.aim = aim;
     }
     Submarine.prototype.forward = function (steps) {
         this.horizontal += steps;
+        this.depth += this.aim * steps;
     };
     Submarine.prototype.up = function (steps) {
-        this.depth -= steps;
+        this.aim -= steps;
     };
     Submarine.prototype.down = function (steps) {
-        this.depth += steps;
+        this.aim += steps;
     };
     Submarine.prototype.position = function () {
         return this.horizontal * this.depth;
@@ -35,6 +37,6 @@ function moveSub(line) {
         }
     }
 }
-var subM = new Submarine(0, 0);
+var subM = new Submarine(0, 0, 0);
 require('fs').readFileSync('/Users/eszpee/projects/adventofcode2021/02/input.txt', 'utf-8').split(/\r?\n/).forEach(moveSub);
 console.log(subM.position());

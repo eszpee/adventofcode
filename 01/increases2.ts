@@ -18,7 +18,7 @@ function measurer2(line: string): void {
 }
 
 let measures = new Array();
-let increases2 = 0;
+let increases2 = 0; 
 
 require('fs').readFileSync('/Users/eszpee/projects/adventofcode2021/01/input.txt', 'utf-8').split(/\r?\n/).forEach(measurer2);
 

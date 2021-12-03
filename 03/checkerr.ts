@@ -14,7 +14,7 @@ sum.forEach((item:number) => {
         result += '1';
     }
 });
-console.log(sum,result);
+//console.log(sum,result);
 const errs:number = parseInt(result,2);
 const inv:number = errs^Math.pow(2,input[0].length)-1;
 console.log(errs*inv);

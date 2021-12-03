@@ -15,7 +15,7 @@ sum.forEach(function (item) {
         result += '1';
     }
 });
-console.log(sum, result);
+//console.log(sum,result);
 var errs = parseInt(result, 2);
 var inv = errs ^ Math.pow(2, input[0].length) - 1;
 console.log(errs * inv);

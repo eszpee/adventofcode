@@ -1,4 +1,3 @@
-'use strict';
 import { readInputArray } from "./inputfile"
 
 function measurer(curr:string, index:number) {

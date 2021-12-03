@@ -35,7 +35,7 @@ function filterLeast(array: string[][], position: number):string[][] {
 
 
 let inputMatrix: string[][];
-inputMatrix = require('fs').readFileSync('/Users/eszpee/projects/adventofcode2021/03/input.txt', 'utf-8').split(/\r?\n/).map((x:string) => {return x.split('');})
+inputMatrix = require('fs').readFileSync('../input/day03.txt', 'utf-8').split(/\r?\n/).map((x:string) => {return x.split('');})
 console.log(inputMatrix);
 
 let currentMatrix = inputMatrix;

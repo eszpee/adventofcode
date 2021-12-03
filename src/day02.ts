@@ -47,5 +47,5 @@ function moveSub(line: string): void {
 }
 
 let subM = new Submarine(0,0,0);
-require('fs').readFileSync('/Users/eszpee/projects/adventofcode2021/02/input.txt', 'utf-8').split(/\r?\n/).forEach((line: string) => moveSub(line));
+require('fs').readFileSync('../input/day02.txt', 'utf-8').split(/\r?\n/).forEach((line: string) => moveSub(line));
 console.log(subM.position());

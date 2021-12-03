@@ -1,6 +1,6 @@
 'use strict';
 var input = new Array();
-input = require('fs').readFileSync('/Users/eszpee/projects/adventofcode2021/03/input_small.txt', 'utf-8').split(/\r?\n/);
+input = require('fs').readFileSync('../input/day03.txt', 'utf-8').split(/\r?\n/);
 var sum = new Array(input[0].length).fill(0);
 for (var i = 0; i < input.length; i++) {
     var line = input[i].split('');

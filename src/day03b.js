@@ -38,7 +38,7 @@ function filterLeast(array, position) {
     return filtered;
 }
 var inputMatrix;
-inputMatrix = require('fs').readFileSync('/Users/eszpee/projects/adventofcode2021/03/input.txt', 'utf-8').split(/\r?\n/).map(function (x) { return x.split(''); });
+inputMatrix = require('fs').readFileSync('../input/day03.txt', 'utf-8').split(/\r?\n/).map(function (x) { return x.split(''); });
 console.log(inputMatrix);
 var currentMatrix = inputMatrix;
 var iterator = 0;

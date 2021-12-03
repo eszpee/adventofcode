@@ -38,5 +38,5 @@ function moveSub(line) {
     }
 }
 var subM = new Submarine(0, 0, 0);
-require('fs').readFileSync('/Users/eszpee/projects/adventofcode2021/02/input.txt', 'utf-8').split(/\r?\n/).forEach(moveSub);
+require('fs').readFileSync('/Users/eszpee/projects/adventofcode2021/02/input.txt', 'utf-8').split(/\r?\n/).forEach(function (line) { return moveSub(line); });
 console.log(subM.position());

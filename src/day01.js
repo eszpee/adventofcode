@@ -1,12 +1,15 @@
 'use strict';
-function measurer(prev, curr) {
+exports.__esModule = true;
+var inputfile_1 = require("./inputfile");
+function measurer(curr, index) {
     var depth = parseInt(curr);
-    if (depth > parseInt(prev)) {
+    if (depth > parseInt(inputArray[index - 1], 10)) {
         increases++;
     }
     return depth;
 }
 ;
 var increases = 0;
-require('fs').readFileSync('../input/day01.txt', 'utf-8').split(/\r?\n/).reduce(measurer);
+var inputArray = (0, inputfile_1.readInputArray)('../input/day01.txt');
+inputArray.forEach(measurer);
 console.log(increases);

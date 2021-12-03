@@ -1,7 +1,9 @@
 'use strict';
-function measurer(prev:string, curr:string): number {
+import { readInputArray } from "./inputfile"
+
+function measurer(curr:string, index:number) {
     let depth = parseInt(curr);
-    if (depth > parseInt(prev)) {
+    if (depth > parseInt(inputArray[index-1],10)) {
         increases++;
     }
     return depth;
@@ -9,6 +11,7 @@ function measurer(prev:string, curr:string): number {
 
 let increases = 0;
 
-require('fs').readFileSync('../input/day01.txt', 'utf-8').split(/\r?\n/).reduce(measurer);
+const inputArray = readInputArray('../input/day01.txt');
+inputArray.forEach(measurer);
 
 console.log(increases);

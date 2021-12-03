@@ -1,9 +1,9 @@
 'use strict';
-function sum(prev, curr) {
+function add(prev, curr) {
     return prev + curr;
 }
 function compare(arr) {
-    return (arr.slice(1, 4).reduce(sum) > arr.slice(0, 3).reduce(sum));
+    return (arr.slice(1, 4).reduce(add) > arr.slice(0, 3).reduce(add));
 }
 function measurer2(line) {
     measures.push(parseInt(line));

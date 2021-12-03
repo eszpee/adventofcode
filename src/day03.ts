@@ -1,13 +1,13 @@
 'use strict';
 let input = new Array();
 input = require('fs').readFileSync('../input/day03.txt', 'utf-8').split(/\r?\n/);
-let sum = new Array(input[0].length).fill(0);
+let sums = new Array(input[0].length).fill(0);
 for (let i:number = 0; i<input.length; i++) {
     let line:string[] = input[i].split('');
-    line.forEach((digit:string, index:number) => {sum[index]+= parseInt(digit);})
+    line.forEach((digit:string, index:number) => {sums[index]+= parseInt(digit);})
 }
 let result:string = '';
-sum.forEach((item:number) => {
+sums.forEach((item:number) => {
     if (item < (input.length/2)) {
         result += '0';
     } else {

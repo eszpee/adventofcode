@@ -1,10 +1,10 @@
 'use strict';
-function sum(prev: number, curr: number): number {
+function add(prev: number, curr: number): number {
     return prev + curr;
 }
 
 function compare(arr:number[]): boolean {
-    return (arr.slice(1,4).reduce(sum) > arr.slice(0,3).reduce(sum));
+    return (arr.slice(1,4).reduce(add) > arr.slice(0,3).reduce(add));
 } 
 
 function measurer2(line: string): void {

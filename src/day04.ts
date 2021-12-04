@@ -68,9 +68,9 @@ class BingoBoard {
 
 import { readInputArray } from "./inputfile";
 const inputArray:string[] = readInputArray('../input/day04.txt');
-let boards:BingoBoard[] = new Array();
+const boards:BingoBoard[] = new Array();
 
-let numbers:number[] = (inputArray.shift() ?? '').split(',').map((v) => parseInt(v,10));
+const numbers:number[] = (inputArray.shift() ?? '').split(',').map((v) => parseInt(v,10));
 
 let line:string|undefined = '';
 let tempArray = new Array();
@@ -91,7 +91,7 @@ boards.push(new BingoBoard(tempArray));
 let weHaveAWinner:boolean = false;
 for (let numIndex = 0;!weHaveAWinner && numIndex<numbers.length; numIndex++) {
     //reading out numbers
-    let currentNumber = numbers[numIndex];
+    const currentNumber = numbers[numIndex];
     for (let b = 0;b<boards.length;b++) {
         boards[b].crossOut(currentNumber);
         if (boards[b].didWeWin()) {

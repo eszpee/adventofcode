@@ -73,7 +73,7 @@ function boardsStillPlaying(boards) {
     return noBingoHere;
 }
 var inputfile_1 = require("./inputfile");
-var inputArray = (0, inputfile_1.readInputArray)('../input/day04_sample.txt');
+var inputArray = (0, inputfile_1.readInputArray)('../input/day04.txt');
 var boards = new Array();
 var numbers = inputArray.shift().split(',').map(function (v) { return parseInt(v, 10); });
 var line = '';
@@ -97,22 +97,18 @@ var weHaveAWinner = false;
 for (var numIndex = 0; !weHaveAWinner && numIndex < numbers.length; numIndex++) {
     //reading out numbers
     var currentNumber = numbers[numIndex];
-    console.log("new number read out: ".concat(currentNumber));
     for (var b = 0; b < boards.length; b++) {
         // let's cross out this number on all boards first, before we check for winners.
         boards[b].crossOut(currentNumber);
     }
     for (var b = 0; b < boards.length; b++) {
         if (boards[b].didWeWin()) {
-            console.log("board number ".concat(b, " won with number ").concat(currentNumber));
-            console.log('winning board:', boards[b]);
             if (boards.length == 1) { //this was the last board!
                 weHaveAWinner = true;
                 console.log(currentNumber * boards[b].remainingSum());
                 break;
             }
             boards.splice(b, 1); //remove winning board
-            console.log('boards remaining:', boards);
         }
     }
 }

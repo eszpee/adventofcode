@@ -77,7 +77,7 @@ function boardsStillPlaying(boards:BingoBoard[]):BingoBoard[] {
 }
 
 import { readInputArray } from "./inputfile";
-const inputArray:string[] = readInputArray('../input/day04_sample.txt');
+const inputArray:string[] = readInputArray('../input/day04.txt');
 let boards:BingoBoard[] = new Array();
 
 let numbers:number[] = inputArray.shift().split(',').map((v) => parseInt(v,10));
@@ -102,22 +102,18 @@ let weHaveAWinner:boolean = false;
 for (let numIndex = 0;!weHaveAWinner && numIndex<numbers.length; numIndex++) {
     //reading out numbers
     let currentNumber = numbers[numIndex];
-    console.log(`new number read out: ${currentNumber}`);
     for (let b = 0;b<boards.length;b++) {
         // let's cross out this number on all boards first, before we check for winners.
         boards[b].crossOut(currentNumber);
     }
     for (let b = 0;b<boards.length;b++) {
         if (boards[b].didWeWin()) {
-            console.log(`board number ${b} won with number ${currentNumber}`);
-            console.log('winning board:',boards[b]);
             if (boards.length == 1) { //this was the last board!
                 weHaveAWinner = true;
                 console.log(currentNumber*boards[b].remainingSum());
                 break;
             }
             boards.splice(b,1); //remove winning board
-            console.log('boards remaining:',boards);
         }
     }
 }

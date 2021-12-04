@@ -67,7 +67,7 @@ class BingoBoard {
 }
 
 import { readInputArray } from "./inputfile";
-const inputArray:string[] = readInputArray('../input/day04_sample.txt');
+const inputArray:string[] = readInputArray('../input/day04.txt');
 let boards:BingoBoard[] = new Array();
 
 let numbers:number[] = inputArray.shift().split(',').map((v) => parseInt(v,10));

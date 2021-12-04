@@ -64,7 +64,7 @@ var BingoBoard = /** @class */ (function () {
     return BingoBoard;
 }());
 var inputfile_1 = require("./inputfile");
-var inputArray = (0, inputfile_1.readInputArray)('../input/day04_sample.txt');
+var inputArray = (0, inputfile_1.readInputArray)('../input/day04.txt');
 var boards = new Array();
 var numbers = inputArray.shift().split(',').map(function (v) { return parseInt(v, 10); });
 var line = '';

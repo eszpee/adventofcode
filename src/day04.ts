@@ -1,5 +1,3 @@
-import { readInputArray } from "./inputfile";
-
 class BingoBoard {
     size: number;
     board: number[][];
@@ -68,17 +66,9 @@ class BingoBoard {
 
 }
 
-/* 
-const testField = [[1,2,3],[4,5,6],[7,8,9]];
-let testBoard = new BingoBoard(testField);
-testBoard.crossOut(5);
-testBoard.crossOut(2);
-testBoard.crossOut(8);
-console.log(testBoard,testBoard.didWeWin(),testBoard.remainingSum());
- */
-
+import { readInputArray } from "./inputfile";
 const inputArray:string[] = readInputArray('../input/day04_sample.txt');
-let boards = new Array();
+let boards:BingoBoard[] = new Array();
 
 let numbers:number[] = inputArray.shift().split(',').map((v) => parseInt(v,10));
 
@@ -98,5 +88,16 @@ while ((line = inputArray.shift()) !== undefined) {
 }
 boards.push(new BingoBoard(tempArray));
 
-console.log(boards);
-console.log(boards[0]);
+let weHaveAWinner:boolean = false;
+for (let numIndex = 0;!weHaveAWinner && numIndex<numbers.length; numIndex++) {
+    //reading out numbers
+    let currentNumber = numbers[numIndex];
+    for (let b = 0;b<boards.length;b++) {
+        boards[b].crossOut(currentNumber);
+        if (boards[b].didWeWin()) {
+            weHaveAWinner = true;
+            console.log(currentNumber*boards[b].remainingSum());
+            break;
+        }
+    }
+}

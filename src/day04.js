@@ -1,6 +1,5 @@
 "use strict";
 exports.__esModule = true;
-var inputfile_1 = require("./inputfile");
 var BingoBoard = /** @class */ (function () {
     function BingoBoard(board) {
         this.size = board[0].length;
@@ -64,14 +63,7 @@ var BingoBoard = /** @class */ (function () {
     };
     return BingoBoard;
 }());
-/*
-const testField = [[1,2,3],[4,5,6],[7,8,9]];
-let testBoard = new BingoBoard(testField);
-testBoard.crossOut(5);
-testBoard.crossOut(2);
-testBoard.crossOut(8);
-console.log(testBoard,testBoard.didWeWin(),testBoard.remainingSum());
- */
+var inputfile_1 = require("./inputfile");
 var inputArray = (0, inputfile_1.readInputArray)('../input/day04_sample.txt');
 var boards = new Array();
 var numbers = inputArray.shift().split(',').map(function (v) { return parseInt(v, 10); });
@@ -92,9 +84,16 @@ while ((line = inputArray.shift()) !== undefined) {
     }
 }
 boards.push(new BingoBoard(tempArray));
-/* for (let i=0;i<boards.length;i++) {
-    realBoards.push(new BingoBoard(boards[i]));
+var weHaveAWinner = false;
+for (var numIndex = 0; !weHaveAWinner && numIndex < numbers.length; numIndex++) {
+    //reading out numbers
+    var currentNumber = numbers[numIndex];
+    for (var b = 0; b < boards.length; b++) {
+        boards[b].crossOut(currentNumber);
+        if (boards[b].didWeWin()) {
+            weHaveAWinner = true;
+            console.log(currentNumber * boards[b].remainingSum());
+            break;
+        }
+    }
 }
- */
-console.log(boards);
-console.log(boards[0]);

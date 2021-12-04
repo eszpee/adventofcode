@@ -26,26 +26,26 @@ class Submarine {
     position(): number {
         return this.horizontal * this.depth;
     }
-}
 
-function moveSub(line: string): void {
-    let [command, value]: string[] = line.split(' '); 
-    switch(command) {
-        case 'forward': {
-            subM.forward(parseInt(value));
-            break;
-        }
-        case 'up': {
-            subM.up(parseInt(value));
-            break;
-        }
-        case 'down': {
-            subM.down(parseInt(value));
-            break;
+    moveSub(line: string): void {
+        let [command, value]: string[] = line.split(' '); 
+        switch(command) {
+            case 'forward': {
+                this.forward(parseInt(value));
+                break;
+            }
+            case 'up': {
+                this.up(parseInt(value));
+                break;
+            }
+            case 'down': {
+                this.down(parseInt(value));
+                break;
+            }
         }
     }
 }
 
 let subM = new Submarine(0,0,0);
-require('fs').readFileSync('../input/day02.txt', 'utf-8').split(/\r?\n/).forEach((line: string) => moveSub(line));
+require('fs').readFileSync('../input/day02.txt', 'utf-8').split(/\r?\n/).forEach((line: string) => subM.moveSub(line));
 console.log(subM.position());

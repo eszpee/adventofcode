@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 exports.__esModule = true;
 var BingoBoard = /** @class */ (function () {
     function BingoBoard(board) {
@@ -75,7 +76,7 @@ function boardsStillPlaying(boards) {
 var inputfile_1 = require("./inputfile");
 var inputArray = (0, inputfile_1.readInputArray)('../input/day04.txt');
 var boards = new Array();
-var numbers = inputArray.shift().split(',').map(function (v) { return parseInt(v, 10); });
+var numbers = ((_a = inputArray.shift()) !== null && _a !== void 0 ? _a : '').split(',').map(function (v) { return parseInt(v, 10); });
 var line = '';
 var tempArray = new Array();
 while ((line = inputArray.shift()) !== undefined) {

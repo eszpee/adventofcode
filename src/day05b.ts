@@ -70,7 +70,9 @@ const inputArray:string[] = readInputArray('../input/day05_sample.txt');
 const maxCoord:number | undefined = inputArray
     .map(line => line.split(' -> ')
         .map(coords => coords.split(','))
-            .map(coord => coord.map(numS => parseInt(numS, 10))))
+            .map(coord => coord.map(numS => parseInt(numS, 10))
+        )
+    )
     .flat(2)
     .sort((a, b) => a - b)
     .pop()

@@ -23,7 +23,6 @@ class SeaMap {
     }
 
     drawLine(a:number[],b:number[]):void {
-        console.log(`===== Drawing a line from ${a} to ${b}`);
         if (a[0] === b[0]) {
             if (a[1]>b[1]) { //need to swap coordinates to draw left->right, up->down
                 [a[1],b[1]] = [b[1],a[1]];
@@ -44,17 +43,12 @@ class SeaMap {
             const lineLength:number = Math.abs(b[0]-a[0]);
             const xDir = (b[0]-a[0])/Math.abs(b[0]-a[0]);
             const yDir = (b[1]-a[1])/Math.abs(b[1]-a[1]);
-            console.log(`x direction: ${xDir}; y direction: ${yDir}`);
             for (let i=0; i<=lineLength;i++) {
                 let x = xDir*i+a[0];
                 let y = yDir*i+a[1];
-                console.log(`point no.: ${i}, setting at ${x};${y}`);
-                //console.log(`old value there: ${this.fields[x][y]}`);
                 this.fields[x][y]++;
-                //console.log(`new value there: ${this.fields[x][y]}`);
             }
         }
-        //console.log("Map after the line:\n"+this.printMap());
     }
 
     getCrosses():number {
@@ -101,6 +95,5 @@ inputArray.map(x =>
     myMap.drawLine(command[0],command[1]);
 });
 
-//myMap.printMap();
 console.log(myMap.getCrosses());
 

@@ -1,6 +1,6 @@
 import { SeaMap } from "./day05_class";
 import { readInputArray } from "./inputfile";
-const inputArray:string[] = readInputArray('../input/day05_sample.txt');
+const inputArray:string[] = readInputArray('../input/day05.txt');
 
 //determine map size. TODO: refactor SeaMap to have flexible map sizes...
 const maxCoord:number | undefined = inputArray
@@ -25,5 +25,5 @@ inputArray
 )
 .forEach(command => myMap.drawLine(command[0],command[1]));
 
-console.log(myMap.printMap(),myMap.getCrosses());
+console.log(myMap.getCrosses());
 

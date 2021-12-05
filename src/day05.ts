@@ -23,17 +23,17 @@ class SeaMap {
         console.log(printString);
     }
 
-    drawLine(x1:number,y1:number,x2:number,y2:number):void {
-        if (x1 === x2) {
-            for (let i=y1; i<=y2;i++) {
-                this.fields[x1][i]++;
-                this.maxes[this.fields[x1][i]]++;
+    drawLine(a:number[],b:number[]):void {
+        if (a[0] === b[0]) {
+            for (let i=a[1]; i<=b[1];i++) {
+                this.fields[a[0]][i]++;
+                this.maxes[this.fields[a[0]][i]]++;
             }
         }
-        else if (y1 === y2) {
-            for (let i=x1; i<=x2;i++) {
-                this.fields[i][y1]++;
-                this.maxes[this.fields[i][y1]]++;
+        else if (a[1] === b[1]) {
+            for (let i=a[0]; i<=b[0];i++) {
+                this.fields[i][a[1]]++;
+                this.maxes[this.fields[i][a[1]]]++;
             }
         }
         else {
@@ -64,10 +64,18 @@ class SeaMap {
     }
 
 }
-
+/* 
+import { readInputArray } from "./inputfile";
+const inputArray:string[] = readInputArray('../input/day05_sample.txt');
+let maxSize = 0;
+let line:string|undefined = '';
+while ((line = inputArray.shift()) !== undefined) {
+    let coords = line.split(' -> ').map(x => x.split(','));
+    console.log(coords);
+}
+ */
 let myMap= new SeaMap(10);
-myMap.drawLine(0,0,0,7);
-myMap.drawLine(0,5,9,5);
+myMap.drawLine([0,0],[0,7]);
+myMap.drawLine([0,5],[9,5]);
 myMap.printMap();
 console.log(myMap.getCrosses());
-//console.log(myMap);

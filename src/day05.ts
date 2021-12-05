@@ -1,15 +1,10 @@
 class SeaMap {
     fields: number[][]; //2D map, 0-no current
-//    maxes: number[];    //maxes[3]: how many points on map with 3 lines crossing  //we probably won't need this damn it
     size: number;       //let's consider the map square for now
 
     constructor(s:number|undefined) {
         this.size = s == undefined ? 0 : s+1;
-//        this.maxes = new Array(255).fill(0);     //hope no more than 255 lines crossing at one point
-        this.fields = new Array(this.size);
-        for (let i=0;i<this.size;i++) {
-            this.fields[i] = new Array(this.size).fill(0);
-        }
+        this.fields = new Array(this.size).fill(undefined).map(() => Array(this.size).fill(0));
     }
 
     printMap():void{
@@ -47,15 +42,6 @@ class SeaMap {
         }
     }
 
-/*     getMax():number { 
-        for (let i=this.maxes.length;i>0;i--) {
-            if (this.maxes[i] >0) {
-                return i;
-            }
-        }
-        return NaN;
-    }
- */
     getCrosses():number {
         //find the number of points where more than one lines overlap
         let crosses = 0;
@@ -102,11 +88,3 @@ inputArray.map(x =>
 
 myMap.printMap();
 console.log(myMap.getCrosses());
-
-
-/* let myMap= new SeaMap(10);
-myMap.drawLine([0,0],[0,7]);
-myMap.drawLine([0,5],[9,5]);
-myMap.printMap();
-console.log(myMap.getCrosses());
- */

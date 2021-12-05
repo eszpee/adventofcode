@@ -4,10 +4,7 @@ class SeaMap {
 
     constructor(s:number|undefined) {
         this.size = s == undefined ? 0 : s+1;
-        this.fields = new Array(this.size);
-        for (let i=0;i<this.size;i++) {
-            this.fields[i] = new Array(this.size).fill(0);
-        }
+        this.fields = Array(this.size).fill(undefined).map(()=>Array(this.size).fill(0));
     }
 
     printMap():string{
@@ -67,7 +64,7 @@ class SeaMap {
 }
 
 import { readInputArray } from "./inputfile";
-const inputArray:string[] = readInputArray('../input/day05.txt');
+const inputArray:string[] = readInputArray('../input/day05_sample.txt');
 
 //determine map size. TODO: refactor SeaMap to have flexible map sizes...
 const maxCoord:number | undefined = inputArray.map(x =>
@@ -95,5 +92,5 @@ inputArray.map(x =>
     myMap.drawLine(command[0],command[1]);
 });
 
-console.log(myMap.getCrosses());
+console.log(myMap.printMap(),myMap.getCrosses());
 

@@ -67,15 +67,15 @@ import { readInputArray } from "./inputfile";
 const inputArray:string[] = readInputArray('../input/day05_sample.txt');
 
 //determine map size. TODO: refactor SeaMap to have flexible map sizes...
-const maxCoord:number | undefined = inputArray.map(x =>
-    x.split(' -> ').map(x =>
-        x.split(',')).map(x => {
-            return x.map(y => {
-                return parseInt(y, 10)
-            })
-        })).flat(2).sort((a, b) => {
-            return a - b;
-        }).pop();
+const maxCoord:number | undefined = inputArray
+    .map(x => x
+        .split(' -> ')
+        .map(x => x.split(',')
+    )
+    .map(x => x.map(y => parseInt(y, 10))))
+    .flat(2)
+    .sort((a, b) => a - b)
+    .pop();
 
 let myMap= new SeaMap(maxCoord);
 

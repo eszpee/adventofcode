@@ -1,21 +1,23 @@
 import { readInputArray } from "./inputfile";
-const inputArray:string[] = readInputArray('../input/day06.txt');
+const inputArray:string[] = readInputArray('../input/day06_sample.txt');
+const daysToCheck = 256;
 
-let schoolOfFish:number[] = inputArray[0].split(',').map(x=>parseInt(x,10));
+let fishString:string = inputArray[0].split(',').join('');
+console.log(`Initial state: ${fishString}`);
 
-for (let day = 1; day<=80;day++) {
-    let currentFishNumber = schoolOfFish.length
-    if (day < 11) { console.log(`After ${day} day(s): ${schoolOfFish}`) };
+for (let day = 1; day<=daysToCheck;day++) {
+    let currentFishNumber = fishString.length
     for (let fish = 0; fish < currentFishNumber; fish++) {
-        if (schoolOfFish[fish] === 0) {
-            schoolOfFish.push(8);
-            schoolOfFish[fish] = 6;
+        if (parseInt(fishString.charAt(fish),10) === 0) {
+            fishString+='8';
+            fishString = fishString.substring(0,fish) + '6' + fishString.substring(fish+1);
         }
         else {
-            schoolOfFish[fish]--;
+            fishString = fishString.substring(0,fish) + (parseInt(fishString.charAt(fish),10)-1) + fishString.substring(fish+1);
         }
     }
+    if (day < 11) { console.log(`After ${day} day(s): ${fishString}`); } else {console.log(`We're at day ${day}`);};
 }
 
-console.log(schoolOfFish.length);
+console.log(fishString.length);
 

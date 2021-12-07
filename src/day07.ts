@@ -1,7 +1,7 @@
 import { readInputArray } from "./inputfile";
 const inputArray:string[] = readInputArray('../input/day07_sample.txt');
 const positions = inputArray[0].split(',').map(s=>parseInt(s,10));
-function calculateFuel(items:number[],target:number):number {
+function calculateConstantFuel(items:number[],target:number):number {
     //calculates the combined fuel needed for all items in ${positions} to get to ${target}
     return items
         .map(item => Math.abs(target-item))
@@ -22,12 +22,12 @@ const average = Math.round(
     positions.length
 );
 
-const distances:number[] = new Array();
+const distancesConst:number[] = new Array();
 for (let i=0;i<=arrayMax(positions);i++) {
-    const dist = calculateFuel(positions,i);
+    const dist = calculateConstantFuel(positions,i);
 //    console.log(`Target is ${i}, combined fuel needed to get there: `,dist);
-    distances.push(dist);
+    distancesConst.push(dist);
 }
 
-console.log("Fuel needed to get to target: ",arrayMin(distances));
+console.log("Constant burning fuel needed to get to target: ",arrayMin(distancesConst));
 

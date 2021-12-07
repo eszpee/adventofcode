@@ -23,12 +23,6 @@ function arrayMin(arr:number[]):number {
     return arr.reduce((prev,curr) => Math.min(prev,curr));
 }
 
-const average = Math.round(
-    positions.reduce((prev, curr) => prev+curr) 
-    / 
-    positions.length
-);
-
 console.log("Constant burning fuel needed to get to target: ",
     arrayMin(
         positions.map(i => calculateConstantFuel(positions,i))

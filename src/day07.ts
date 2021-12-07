@@ -1,5 +1,5 @@
 import { readInputArray } from "./inputfile";
-const inputArray:string[] = readInputArray('../input/day07.txt');
+const inputArray:string[] = readInputArray('../input/day07_sample.txt');
 const positions = inputArray[0].split(',').map(s=>parseInt(s,10));
 function calculateConstantFuel(items:number[],target:number):number {
     //calculates the combined fuel needed for all items in ${positions} to get to ${target}

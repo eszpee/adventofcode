@@ -35,3 +35,4 @@ console.log("Exponential burning fuel needed to get to target: ",
     )
 );
 
+//TODO: fix calculations

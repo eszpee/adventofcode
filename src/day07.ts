@@ -1,3 +1,4 @@
+console.log('what if we branch');
 import { readInputArray } from "./inputfile";
 const inputArray:string[] = readInputArray('../input/day07.txt');
 const positions = inputArray[0].split(',').map(s=>parseInt(s,10));

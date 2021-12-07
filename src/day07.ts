@@ -1,5 +1,5 @@
 import { readInputArray } from "./inputfile";
-const inputArray:string[] = readInputArray('../input/day07_sample.txt');
+const inputArray:string[] = readInputArray('day07_sample');
 const positions = inputArray[0].split(',').map(s=>parseInt(s,10));
 
 function calculateConstantFuel(items:number[],target:number):number {
@@ -18,7 +18,7 @@ function arrayMax(arr:number[]):number {
     //return max item of array
     return arr.reduce((prev,curr) => Math.max(prev,curr));
 }
-function arrayMin(arr:number[]):number {
+export function arrayMin(arr:number[]):number {
     //return min item of array
     return arr.reduce((prev,curr) => Math.min(prev,curr));
 }
@@ -34,4 +34,3 @@ console.log("Exponential burning fuel needed to get to target: ",
         positions.map(i => calculateExponentialFuel(positions,i))
     )
 );
-

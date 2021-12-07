@@ -1,7 +1,8 @@
 import { readFileSync } from 'fs';
+import path = require('path');
 
-export function readInputTxt(path: string): string {
-    return readFileSync(path, 'utf8');
+export function readInputTxt(day: string): string {
+    return readFileSync(path.join(__dirname, '..', 'input', day+'.txt'), 'utf8');
 }
 
 export function readInputArray(path: string): string[] {

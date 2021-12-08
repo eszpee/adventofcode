@@ -1,15 +1,8 @@
 import { readInputArray } from "./inputfile";
-const inputArray:string[] = ['acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf'];
+const inputArray:string[] = readInputArray('../input/day08.txt');
 //['acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf'];
-//readInputArray('../input/day08.txt');
-const inputPatterns:string[][] = new Array();
-const inputDigits:string[][] = new Array();
-inputArray.forEach(oneline => {
-        const thisLine = oneline.split(' | ');
-        inputPatterns.push(thisLine[0].split(' '));
-        inputDigits.push(thisLine[1].split(' '));
-    }
-);
+//['acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | fcgedb cgb dgebacf gc'];
+//readInputArray('../input/day08_sample.txt');
 
 function is1478(s:string):boolean {
     //checks if the passed string represents 1,4,7 or 8 
@@ -17,32 +10,27 @@ function is1478(s:string):boolean {
     const goodLength = new Set([2,4,3,7]);
     return goodLength.has(s.length);
 }
-
-let numberOfUniques = 0;
-inputDigits.forEach(oneline => {
-    oneline.forEach(oneitem => {
-        if (is1478(oneitem)) { numberOfUniques++; }
-    })
-});
-//console.log(`First part: ${numberOfUniques} unique length segmentlists.`);
-
-const numbers = {
-    'ABCEFG': 0, 
-    'CF': 1,
-    'ACDEG': 2,
-    'ACDFG': 3,
-    'BCDF': 4,
-    'ABDFG': 5,
-    'ABDEFG': 6,
-    'ACF': 7,
-    'ABCDEFG': 8,
-    'ABCDFG': 9,
-};
 interface SegmentDecoder {
     [key: string]: string;
 }
 
+interface DigitDecoder {
+    [key: string]: number;
+}
+const numbers:DigitDecoder = {
+    'abcefg': 0, 
+    'cf': 1,
+    'acdeg': 2,
+    'acdfg': 3,
+    'bcdf': 4,
+    'abdfg': 5,
+    'abdefg': 6,
+    'acf': 7,
+    'abcdefg': 8,
+    'abcdfg': 9
+};
 function doMagic(s:string[]):SegmentDecoder {
+    const LOG=false;
     // deducts which segment represents which one 
     function nLength(s:string[],n:number):string[] {
         //returns the items in s[] that have a length of n
@@ -61,7 +49,7 @@ function doMagic(s:string[]):SegmentDecoder {
         return np;
     }
 
-    let sd:SegmentDecoder = { //TODO: this will need to be filled up runtime
+    let sd:SegmentDecoder = { //this will be filled up runtime
         'd': 'X',//'A',
         'e': 'X',//'B',
         'a': 'X',//'C',
@@ -72,14 +60,13 @@ function doMagic(s:string[]):SegmentDecoder {
     };
 
     s = s.map(x=>x.split('').sort().join(''));
-    //console.log(s);
 
     const cf = nLength(s,2)[0].split(''); // the only 2-segment number is 1, only with two segments on the right side
-    console.log("C or F",cf); // we have C or F
+    if (LOG) console.log("C or F",cf); // we have C or F
 
     const a = nonPresent(cf,nLength(s,3)[0])[0];
-    console.log("A: ",a); // the only 3-segment number is 7, that includes C and F, so the remainder is A
-    sd[a] = 'A';
+    if (LOG) console.log("A: ",a); // the only 3-segment number is 7, that includes C and F, so the remainder is A
+    sd['a'] = a;
 
     //get the string that's 5-char long and includes ACF... 
     let three = '';
@@ -97,7 +84,7 @@ function doMagic(s:string[]):SegmentDecoder {
     const threeArr:string[] = three.split('');
     acf.forEach(chr => threeArr.splice(threeArr.indexOf(chr),1));
     let dg = threeArr;
-    console.log("D or G",dg);
+    if (LOG) console.log("D or G",dg);
 
     //get the string that's 4-char long (only one:4) and check which one of DG isn't in it => that should be D
     let four = ''
@@ -110,19 +97,19 @@ function doMagic(s:string[]):SegmentDecoder {
             d = chr;
         }
     });
-    sd[d] = 'D';
-    console.log("D: ",d);
+    sd['d'] = d;
+    if (LOG) console.log("D: ",d);
     //...if we have G from DG then D is the other one
     let g = dg[1-dg.indexOf(d)];
-    sd[g] = 'G';
-    console.log("G: ",g);
+    sd['g'] = g;
+    if (LOG) console.log("G: ",g);
     //...also if we have 4(BCDF), we can remove CF and D to get B
     const fourArr:string[] = four.split('');
     let dcf = [d,...cf];
     dcf.forEach(chr => fourArr.splice(fourArr.indexOf(chr),1));
     let b = fourArr[0];
-    sd[b] = 'B'
-    console.log("B: ",b);
+    sd['b'] = b;
+    if (LOG) console.log("B: ",b);
 
 
     // take one of the 6-segment digits (from 0, 6, 9) that DOESN'T have D => it should be 0...
@@ -137,8 +124,8 @@ function doMagic(s:string[]):SegmentDecoder {
     let abgcf = [a,b,g,...cf];
     abgcf.forEach(chr => zeroArr.splice(zeroArr.indexOf(chr),1));
     let e = zeroArr[0];
-    sd[e] = 'E'
-    console.log("E: ",e);
+    sd['e'] = e;
+    if (LOG) console.log("E: ",e);
 
     // take one of the 6-segment digits (from 0, 6, 9) that has all of have ABDEG => it should be 6...
     let six = '';
@@ -148,36 +135,63 @@ function doMagic(s:string[]):SegmentDecoder {
         }
     });
     //...and if we remove ABDEG from 6, the only segment left is F
-    const sixArr:string[] = zero.split('');
+    const sixArr:string[] = six.split('');
     let abdeg = [a,b,d,e,g];
     abdeg.forEach(chr => sixArr.splice(sixArr.indexOf(chr),1));
     let f = sixArr[0];
-    sd[f] = 'F'
-    console.log("F: ",f);
+    sd['f'] = f;
+    if (LOG) console.log("F: ",f);
     //...if we have F from CF then C is the other one
     let c = cf[1-cf.indexOf(f)];
-    sd[c] = 'C';
-    console.log("C: ",c);
+    sd['c'] = c;
+    if (LOG) console.log("C: ",c);
 
 
-    console.log(sd);
+    if (LOG) console.log(sd);
 
     return sd;
 }
 
-function decodeNumber(s:string[],d:SegmentDecoder):number {
-    //decodes a number from segment descriptions ['afbcd', 'ef', ...] with d decoder, and returns corresponding number
-    let decodedNumber = s
-        .map(onestring => onestring.split('')
-            .map(onechar => d[onechar])
-                .sort().join('')
-        ).map(onestring => numbers[onestring])
-            .join('');
-    return parseInt(decodedNumber,10);
+function decodeNumber(s:string[],num:DigitDecoder):number {
+    //decodes a number from segment descriptions ['afbcd', 'ef', ...] with num lookup decoder, and returns corresponding number
+    const LOG = false;
+    let sSorted = s.map(onestring => onestring.split('').sort().join(''));
+    if(LOG) console.log(num,sSorted);
+    return parseInt(sSorted.map(number => num[number]).join(''),10);
 }
 
-//const segmentDecoder = doMagic(inputPatterns[0]); //TODO: this should be a loop
 
-let finalNumbers:number[] = inputDigits.map((digit,index) => decodeNumber(digit,doMagic(inputPatterns[index])));
-//console.log(finalNumbers);
+const inputPatterns:string[][] = new Array();
+const inputDigits:string[][] = new Array();
+inputArray.forEach(oneline => {
+        const thisLine = oneline.split(' | ');
+        inputPatterns.push(thisLine[0].split(' '));
+        inputDigits.push(thisLine[1].split(' '));
+    }
+);
 
+//SOLUTION FOR FIRST PART
+let numberOfUniques = 0;
+inputDigits.forEach(oneline => {
+    oneline.forEach(oneitem => {
+        if (is1478(oneitem)) { numberOfUniques++; }
+    })
+});
+console.log(`First part: ${numberOfUniques} unique length segmentlists.`);
+
+let sum = 0;
+for (let line = 0;line<inputPatterns.length;line++) {
+    const segmentDecoder = doMagic(inputPatterns[line]); 
+    let newNumbers:DigitDecoder = {};
+    for (var key in numbers) {
+        let keyArr = key.split('');
+        let newArr = keyArr.map(c => segmentDecoder[c]);
+        let newKey = newArr.sort().join('').toLowerCase();
+        newNumbers[newKey] = numbers[key];
+    }
+    
+    let finalNumber = decodeNumber(inputDigits[line],newNumbers);
+    sum +=finalNumber;
+    console.log(finalNumber);
+}
+console.log("Final number:",sum);

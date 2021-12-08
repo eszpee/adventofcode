@@ -48,7 +48,6 @@ function doMagic(s:string[]):SegmentDecoder {
         return sArr.join('');
     }
 
-    let sd:SegmentDecoder = {};
     s = s.map(x=>x.split('').sort().join(''));
 
     // the only 2-segment number is 1, so we have C or F
@@ -56,7 +55,6 @@ function doMagic(s:string[]):SegmentDecoder {
 
     // the only 3-segment number is 7, that includes C and F, so the remainder is A
     const a = removeChars(cf,nLength(s,3)[0]);
-    sd['a'] = a; 
 
     //get the string that's 5-char long and includes ACF... 
     let three = nLength(s,5).filter(string => {
@@ -77,14 +75,11 @@ function doMagic(s:string[]):SegmentDecoder {
             d = chr;
         }
     });
-    sd['d'] = d;
     //...if we have G from DG then D is the other one
     let g = otherOne(d,dg);
-    sd['g'] = g;
     //...also if we have the digit 4(BCDF), we can remove CF and D to get B
     const fourArr:string[] = four.split('');
     let b = removeChars([d,...cf],four);
-    sd['b'] = b;
 
     // take one of the 6-segment digits (from 0, 6, 9) that DOESN'T have D => it should be 0...
     let zero = '';
@@ -95,7 +90,6 @@ function doMagic(s:string[]):SegmentDecoder {
     });
     //...and if we remove ABG and CF from 0, the only segment left is E
     let e = removeChars([a,b,g,...cf],zero);
-    sd['e'] = e;
 
     // take one of the 6-segment digits (from 0, 6, 9) that has all of have ABDEG => it should be 6...
     let six = '';
@@ -106,13 +100,19 @@ function doMagic(s:string[]):SegmentDecoder {
     });
     //...and if we remove ABDEG from 6, the only segment left is F
     let f = removeChars([a,b,d,e,g],six);
-    sd['f'] = f;
 
     //if we have F from CF then C is the other one
     let c = otherOne(f,cf);
-    sd['c'] = c;
 
-    return sd;
+    return {
+        'a': a,
+        'b': b,
+        'c': c,
+        'd': d,
+        'e': e,
+        'f': f,
+        'g': g,
+    };
 }
 
 function decodeNumber(s:string[],decipher:DigitDecoder):number {

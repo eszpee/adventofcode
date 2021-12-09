@@ -53,10 +53,58 @@ function secondPart(inputMap:number[][]):number {
             }
             s+='\n';
         }
-        console.log(s);
+        console.log(s.substring(0, s.length - 1));
     }
 
-    printBitmap(numToBitmap(inputMap));
+    function floodFill(x:number,y:number,currSize:number = 0):number {
+        // TODO: shouldn't count false areas to area size!
+        // Implements flood fill algorythm on bitMap, starting from position (x;y), as long as there are 'true' items around it.
+        // returns the size of the area that was filled.
+        const LOG = false;
+        if(LOG) console.log(`floodFill ${x};${y}, currSize`,currSize);
+        if (bitMap[y][x]) {
+            //current point can be filled
+            bitMap[y][x] = false;
+            currSize++; 
+            if(LOG) console.log("point is empty, can be filled");
+            if(LOG) printBitmap(bitMap);
+            if(LOG) console.log(currSize);
+
+            //check point above
+            if (y>0) {
+                if(LOG) console.log("checking point above");
+                currSize = floodFill(x,y-1,currSize);
+            } 
+
+            //check point below
+            if (y<bitMap.length-1) {
+                if(LOG) console.log("checking point below");
+                currSize = floodFill(x,y+1,currSize);
+            } 
+
+            //check point left
+            if (x>0) {
+                if(LOG) console.log("checking point left");
+                currSize = floodFill(x-1,y,currSize);
+            } 
+
+            //check point right
+            if (x<bitMap[0].length-1) {
+                if(LOG) console.log("checking point right");
+                currSize = floodFill(x+1,y,currSize);
+            } 
+        }
+        else {
+            if(LOG) console.log("point already filled");
+            return currSize;
+        }
+        return currSize;
+    }
+
+    const bitMap = numToBitmap(inputMap)
+    if(false) console.log("map before floodfill");
+    if(false) printBitmap(bitMap);
+    console.log(floodFill(0,0));
 
     return 0;
 }

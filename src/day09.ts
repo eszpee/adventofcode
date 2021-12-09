@@ -1,14 +1,15 @@
 import { debug } from "console";
 import { readInputArray } from "./inputfile";
 const inputArray:string[] = 
-[
+/* [
     '2199943210',
     '3987894921',
     '9856789892',
     '8767896789',
     '9899965678'
-]
-|| readInputArray('../input/day09_sample.txt');
+] ||
+ */
+readInputArray('../input/day09.txt');
 
 function isMin(center:number, top:number, bottom:number, left:number, right:number):boolean {
     return ((center<top) && (center<bottom) && (center<left) && (center<right));

@@ -1,22 +1,20 @@
 import { debug } from "console";
 import { readInputArray } from "./inputfile";
 const inputArray:string[] = 
-/* [
+ [
     '2199943210',
     '3987894921',
     '9856789892',
     '8767896789',
     '9899965678'
 ] ||
- */
 readInputArray('../input/day09.txt');
 
-function isMin(center:number, top:number, bottom:number, left:number, right:number):boolean {
-    return ((center<top) && (center<bottom) && (center<left) && (center<right));
-}
-
 function firstPart(map:number[][]):number {
-    let debugstring = '';
+    function isMin(center:number, top:number, bottom:number, left:number, right:number):boolean {
+        return ((center<top) && (center<bottom) && (center<left) && (center<right));
+    }
+
     let minSum = 0;
     for (let y=0;y<map.length;y++) {    
         for (let x=0;x<map[y].length;x++) {
@@ -25,20 +23,17 @@ function firstPart(map:number[][]):number {
             let top = (y === 0) ? Infinity : map[y-1][x];
             let bottom = (y === map.length-1) ? Infinity : map[y+1][x];
             if (isMin(map[y][x], top, bottom, left, right)) {
-                debugstring += 'X';
                 minSum += 1+map[y][x];
             }  
-            else {
-                debugstring += map[y][x];
-            }
         }
-        debugstring += '\n';
     }
-    //console.log(debugstring);
     return minSum;
 }
 
+function secondPart(inputMap:number[][]) {
+
+}
+
 const inputMap = inputArray.map(line => line.split('').map(digit => parseInt(digit,10)));
-//console.log(inputMap);
 
 console.log(`solution to first part is: ${firstPart(inputMap)}`);

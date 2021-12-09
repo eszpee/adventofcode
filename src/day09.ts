@@ -1,14 +1,6 @@
 import { debug } from "console";
 import { readInputArray } from "./inputfile";
-const inputArray:string[] = 
-  [
-    '2199943210',
-    '3987894921',
-    '9856789892',
-    '8767896789',
-    '9899965678'
-] ||
-readInputArray('../input/day09.txt');
+const inputArray:string[] = readInputArray('../input/day09.txt');
 
  function firstPart(map:number[][]):number {
     function isMin(center:number, top:number, bottom:number, left:number, right:number):boolean {
@@ -104,9 +96,15 @@ function secondPart(inputMap:number[][]):number {
     const bitMap = numToBitmap(inputMap)
     if(false) console.log("map before floodfill");
     if(false) printBitmap(bitMap);
-    console.log(floodFill(0,0));
 
-    return 0;
+    let sizeArr:number[] = new Array;
+    for (let y=0;y<bitMap.length;y++) {    
+        for (let x=0;x<bitMap[y].length;x++) {
+            sizeArr.push(floodFill(x,y));
+        }
+    }
+
+    return sizeArr.sort((a,b) => b-a).slice(0,3).reduce((curr,prev) => curr *= prev);
 }
 
 const inputMap = inputArray.map(line => line.split('').map(digit => parseInt(digit,10)));

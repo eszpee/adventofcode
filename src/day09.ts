@@ -80,7 +80,6 @@ function secondPart(inputMap:number[][]):number {
                 currSize = floodFill(x+1,y,currSize);
             } 
         }
-        printBitmap(bitMap);
         return currSize;
     }
 
@@ -90,6 +89,7 @@ function secondPart(inputMap:number[][]):number {
     for (let y=0;y<bitMap.length;y++) {    
         for (let x=0;x<bitMap[y].length;x++) {
             sizeArr.push(floodFill(x,y));
+            printBitmap(bitMap);
         }
     }
 

@@ -1,6 +1,8 @@
 {
   "devDependencies": {
     "@tsconfig/node16": "^1.0.2",
-    "@types/node": "^16.11.11"
+    "@types/ansi": "^0.3.2",
+    "@types/node": "^16.11.11",
+    "ansi": "^0.3.1"
   }
 }

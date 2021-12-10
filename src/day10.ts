@@ -1,6 +1,6 @@
 import { readInputArray } from "./inputfile";
 const inputArray:string[] = readInputArray('../input/day10.txt');
-/* ['[({(<(())[]>[[{[]{<()<>>',
+ /*['[({(<(())[]>[[{[]{<()<>>',
     '[(()[<>])]({[<{<<[]>>(',
     '{([(<{}[<>[]}>{[]{[(<()>',
     '(((({<>}<{<{<>}{[]{[]{}',
@@ -10,8 +10,11 @@ const inputArray:string[] = readInputArray('../input/day10.txt');
     '[<(<(<(<{}))><([]([]()',
     '<{([([[(<>()){}]>(<<{{',
     '<{([{{}}[<[[[<>{}]]]>[]]'];
- */// readInputArray('../input/day10.txt');
+*/// readInputArray('../input/day10.txt');
 
+interface Scores {
+    [key: string]: number;
+}
 interface Chunks {
     [key: string]: string;
 }
@@ -22,19 +25,13 @@ const CHUNKS:Chunks =  {
     '<': '>'
 };
 
-interface Scores {
-    [key: string]: number;
-}
-const SCORES:Scores =  {
-    ')': 3,
-    ']': 57,
-    '}': 1197,
-    '>': 25137
-};
-
-
-
 function firstPart(input:string[]):number {
+    const SCORES_1:Scores =  {
+        ')': 3,
+        ']': 57,
+        '}': 1197,
+        '>': 25137
+    };
     let sumOfIllegals:number = 0;
     input.forEach(line => {
         let stack:string[] = new Array(); //stack to implement opening/closing validation
@@ -52,10 +49,60 @@ function firstPart(input:string[]):number {
                 }
             });
         if (illegals.length>0) {
-            sumOfIllegals+=SCORES[illegals[0]];
+            sumOfIllegals+=SCORES_1[illegals[0]];
         }
     });
     return sumOfIllegals;
 }
 
+function secondPart(input:string[]):number {
+    const SCORES_2:Scores =  {
+        ')': 1,
+        ']': 2,
+        '}': 3,
+        '>': 4
+    };
+    function middleValue(input:number[]):number {
+        //sorts inputs and returns the one that's in the middle
+        return (input.sort((a,b) => a-b)[(input.length-1)/2]);
+    }
+
+    let lineScores:number[] = new Array();
+
+    input.forEach(line => {
+        let stack:string[] = new Array(); //stack to implement opening/closing validation
+        let illegals:string[] = new Array(); //array to store illegals (we will only need the first at first part)
+        line.split('')
+            .forEach(chr => {
+                if (Object.keys(CHUNKS).includes(chr)) { //openers
+                    stack.push(chr);
+                }
+                else if (Object.values(CHUNKS).includes(chr)) { //closers
+                    const last:string|undefined = stack.pop() || '';
+                    if (CHUNKS[last] !== chr) {
+                        illegals.push(chr);
+                    }
+                }
+            });
+        if (illegals.length>0) {
+            //line can be ignored
+            console.log("illegal line:",line);
+        }
+        else if (stack.length > 0) {
+            //line is incomplete
+            const closerStack:string[] = stack.reverse().map(item => CHUNKS[item]);
+            console.log("incomplete line:",line,"closer stack:",closerStack.join(''));
+            const closerStackScores:number[] = closerStack.map(chr => SCORES_2[chr]);
+            const closerScore:number = closerStackScores.reduce((p,c) => p*5+c);
+            console.log("score",closerScore);
+            lineScores.push(closerScore);
+        }
+        else {
+            console.log("perfect line:",line);
+        }
+    }); 
+    return middleValue(lineScores);
+}
+
 console.log('Solution for first part:',firstPart(inputArray));
+console.log('Solution for second part:',secondPart(inputArray));

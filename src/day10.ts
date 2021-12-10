@@ -1,17 +1,5 @@
 import { readInputArray } from "./inputfile";
 const inputArray:string[] = readInputArray('../input/day10.txt');
- /*['[({(<(())[]>[[{[]{<()<>>',
-    '[(()[<>])]({[<{<<[]>>(',
-    '{([(<{}[<>[]}>{[]{[(<()>',
-    '(((({<>}<{<{<>}{[]{[]{}',
-    '[[<[([]))<([[{}[[()]]]',
-    '[{[{({}]{}}([{[{{{}}([]',
-    '{<[[]]>}<{[{[{[]{()[[[]',
-    '[<(<(<(<{}))><([]([]()',
-    '<{([([[(<>()){}]>(<<{{',
-    '<{([{{}}[<[[[<>{}]]]>[]]'];
-*/// readInputArray('../input/day10.txt');
-
 interface Scores {
     [key: string]: number;
 }
@@ -71,7 +59,7 @@ function secondPart(input:string[]):number {
 
     input.forEach(line => {
         let stack:string[] = new Array(); //stack to implement opening/closing validation
-        let illegals:string[] = new Array(); //array to store illegals (we will only need the first at first part)
+        let illegals:string[] = new Array(); //array to store illegals 
         line.split('')
             .forEach(chr => {
                 if (Object.keys(CHUNKS).includes(chr)) { //openers
@@ -85,20 +73,17 @@ function secondPart(input:string[]):number {
                 }
             });
         if (illegals.length>0) {
-            //line can be ignored
-            console.log("illegal line:",line);
+            ;//line is illegal, can be ignored
         }
         else if (stack.length > 0) {
             //line is incomplete
             const closerStack:string[] = stack.reverse().map(item => CHUNKS[item]);
-            console.log("incomplete line:",line,"closer stack:",closerStack.join(''));
             const closerStackScores:number[] = closerStack.map(chr => SCORES_2[chr]);
             const closerScore:number = closerStackScores.reduce((p,c) => p*5+c);
-            console.log("score",closerScore);
             lineScores.push(closerScore);
         }
         else {
-            console.log("perfect line:",line);
+            ;//line has no mistakes, can be ignored 
         }
     }); 
     return middleValue(lineScores);

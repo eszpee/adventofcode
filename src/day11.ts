@@ -1,5 +1,6 @@
 import { readInputArray } from "./inputfile";
-const inputArray:string[] = [
+ const inputArray:string[] = readInputArray('../input/day11.txt');
+ /*[
     '5483143223',
     '2745854711',
     '5264556173',
@@ -10,7 +11,7 @@ const inputArray:string[] = [
     '6882881134',
     '4846848554',
     '5283751526'];
-//readInputArray('../input/day11.txt');
+ *///readInputArray('../input/day11.txt');
 
 function anyHighItems(map:number[][]):boolean {
     //checks if there are any items that are higher than 9

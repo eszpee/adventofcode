@@ -1,6 +1,6 @@
 import { readInputArray } from "./inputfile";
  const inputArray:string[] = readInputArray('../input/day11.txt');
- /*[
+ /* [
     '5483143223',
     '2745854711',
     '5264556173',
@@ -11,7 +11,8 @@ import { readInputArray } from "./inputfile";
     '6882881134',
     '4846848554',
     '5283751526'];
- *///readInputArray('../input/day11.txt');
+    */
+ //readInputArray('../input/day11.txt');
 
 function anyHighItems(map:number[][]):boolean {
     //checks if there are any items that are higher than 9
@@ -40,6 +41,15 @@ function increaseNeighbors(m:number[][],i:number,j:number):number[][] {
     return m;
 }
 
+function areWeStillRunning(part:number,step:number,m:number[][]):boolean {
+    if (part === 1) {
+        return (step < 100);
+    }
+    else {
+        return (m.flat().reduce((a,b) => a+b) > 0);
+    }
+}
+
 let inputMap:number[][] = inputArray
     .map(line => line.split(''))
     .map(function(l) { 
@@ -49,34 +59,37 @@ let inputMap:number[][] = inputArray
 inputMap.push([0,0,0,0,0,0,0,0,0,0,0,0]);
 inputMap.unshift([0,0,0,0,0,0,0,0,0,0,0,0]);
 
-console.log(inputMap.join('\n'));
+//console.log(inputMap.join('\n'));
 
-let flashes:number = 0;
+let solution:number[] = new Array(3).fill(0); //keeping solutions, 1-indexed, so 0, then flashes, then steps
+for (let part = 1; part <= 2; part++) {
+    while (areWeStillRunning(part,solution[2],inputMap)) {
+//        console.log(`step ${solution[2]}`);
 
-for (let step = 1;step<=100;step++) {
-    console.log(`step ${step}`);
-
-    //increase every item (within borders)
-    for (let i=1;i<inputMap.length-1;i++) {
-        for (let j=1;j<inputMap[i].length-1;j++) {
-            inputMap[i][j]++;
-        }
-    }
-    
-    //as long as there are any items higher than 9, keep on flashing
-    while (anyHighItems(inputMap)) {
+        //increase every item (within borders)
         for (let i=1;i<inputMap.length-1;i++) {
             for (let j=1;j<inputMap[i].length-1;j++) {
-                if (inputMap[i][j] > 9) {
-                    inputMap[i][j] = 0;
-                    flashes++;
-                    inputMap = increaseNeighbors(inputMap,i,j);
+                inputMap[i][j]++;
+            }
+        }
+        
+        //as long as there are any items higher than 9, keep on flashing
+        while (anyHighItems(inputMap)) {
+            for (let i=1;i<inputMap.length-1;i++) {
+                for (let j=1;j<inputMap[i].length-1;j++) {
+                    if (inputMap[i][j] > 9) {
+                        inputMap[i][j] = 0;
+                        solution[1]++;
+                        inputMap = increaseNeighbors(inputMap,i,j);
+                    }
                 }
             }
         }
+
+//        console.log(inputMap.join('\n'));
+//        console.log(`flashes so far: ${solution[1]}`);
+        solution[2]++;
+
     }
-
-    console.log(inputMap.join('\n'));
-    console.log(`flashes so far: ${flashes}`);
+    console.log(`Solution for part ${part}: ${solution[part]}`);
 }
-

@@ -1,18 +1,5 @@
 import { readInputArray } from "./inputfile";
- const inputArray:string[] = readInputArray('../input/day11.txt');
- /* [
-    '5483143223',
-    '2745854711',
-    '5264556173',
-    '6141336146',
-    '6357385478',
-    '4167524645',
-    '2176841721',
-    '6882881134',
-    '4846848554',
-    '5283751526'];
-    */
- //readInputArray('../input/day11.txt');
+const inputArray:string[] = readInputArray('../input/day11.txt');
 
 function anyHighItems(map:number[][]):boolean {
     //checks if there are any items that are higher than 9
@@ -59,12 +46,9 @@ let inputMap:number[][] = inputArray
 inputMap.push([0,0,0,0,0,0,0,0,0,0,0,0]);
 inputMap.unshift([0,0,0,0,0,0,0,0,0,0,0,0]);
 
-//console.log(inputMap.join('\n'));
-
 let solution:number[] = new Array(3).fill(0); //keeping solutions, 1-indexed, so 0, then flashes, then steps
 for (let part = 1; part <= 2; part++) {
     while (areWeStillRunning(part,solution[2],inputMap)) {
-//        console.log(`step ${solution[2]}`);
 
         //increase every item (within borders)
         for (let i=1;i<inputMap.length-1;i++) {
@@ -79,17 +63,14 @@ for (let part = 1; part <= 2; part++) {
                 for (let j=1;j<inputMap[i].length-1;j++) {
                     if (inputMap[i][j] > 9) {
                         inputMap[i][j] = 0;
-                        solution[1]++;
+                        solution[1]++; //increase flash counter
                         inputMap = increaseNeighbors(inputMap,i,j);
                     }
                 }
             }
         }
 
-//        console.log(inputMap.join('\n'));
-//        console.log(`flashes so far: ${solution[1]}`);
-        solution[2]++;
-
+        solution[2]++; //this step is done
     }
     console.log(`Solution for part ${part}: ${solution[part]}`);
 }

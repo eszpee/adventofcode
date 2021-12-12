@@ -3,13 +3,32 @@ import { inspect } from 'util';
 import { readInputArray } from "./inputfile";
 let inputArray:string[] = 
 [
+    'fs-end',
+    'he-DX',
+    'fs-he',
+    'start-DX',
+    'pj-DX',
+    'end-zg',
+    'zg-sl',
+    'zg-pj',
+    'pj-he',
+    'RW-he',
+    'fs-DX',
+    'pj-RW',
+    'zg-RW',
+    'start-pj',
+    'he-WI',
+    'zg-he',
+    'pj-fs',
+    'start-RW'
+/* 
 'start-A',
 'start-b',
 'A-c',
 'A-b',
 'b-d',
 'A-end',
-'b-end'
+'b-end' */
 ];
 // readInputArray('../input/day11.txt');
 
@@ -20,6 +39,11 @@ console.log("tunels:",tunels);
 
 
 function getCombinations2(chars:string[],max:number):string[] {
+    function matches(s1:string,s2:string):boolean {
+        const last = s1.split('-').pop();
+        const first = s2.split('-')[0];
+        return (last === first);
+    }
     var result:string[] = [];
     if (max === 1) {
         return chars;
@@ -28,7 +52,9 @@ function getCombinations2(chars:string[],max:number):string[] {
         let subresult = getCombinations2(chars,max-1);
         for (let i=0;i<subresult.length;i++) {
             for (let c=0;c<chars.length;c++) {
-                result.push(subresult[i]+chars[c]);
+                if (matches(subresult[i],chars[c])) { 
+                    result.push(subresult[i]+chars[c]);
+                }
             }
         }
         return chars.concat(result);
@@ -45,15 +71,13 @@ console.log("enders:",enders);
 
 let preMiddlers = tunels.filter((t:string[]) => (!(t.includes('start') || t.includes('end')))).map(p => p.join('-'));
 let middlers:string[] = getCombinations2( //all possible path combinations
-    preMiddlers,4
+    preMiddlers,8
 ); 
 console.log("middlers:",middlers);
 console.log("preMiddlers:",preMiddlers);
 middlers = middlers.concat(preMiddlers);
 middlers.unshift('');
 console.log("middlers mixed:",middlers);
-
-
 
 function isValidPath(p:string):boolean {
     let validPath = true;

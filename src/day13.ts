@@ -1,7 +1,7 @@
 import { start } from 'repl';
 import { inspect } from 'util';
 import { readInputArray } from "./inputfile";
-let inputArray:string[] = 
+let inputArray:string[] = readInputArray('../input/day13.txt'); /*
 [
     '6,10',
     '0,14',
@@ -24,7 +24,8 @@ let inputArray:string[] =
     '',
     'fold along y=7',
     'fold along x=5'
-];
+]; 
+*/
 // readInputArray('../input/day13.txt');
 
 function drawMap(map:boolean[][]):void {

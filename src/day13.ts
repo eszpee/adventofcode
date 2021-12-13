@@ -91,7 +91,7 @@ points.forEach(coord => {
     map[coord[1]][coord[0]] = true;
 });
 folds.forEach((f,index) => {
-    if (index == 0) {
+    if (true) { //index == 0
         map = fold(map,f[0],parseInt(f[1],10))
         drawMap(map);
     };

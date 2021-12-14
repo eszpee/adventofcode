@@ -1,5 +1,5 @@
 import { readInputArray } from "./inputfile";
-let inputArray:string[] = `NNCB
+let inputArray:string[] = /* `NNCB
 
 CH -> B
 HH -> N
@@ -16,8 +16,8 @@ BN -> B
 BB -> N
 BC -> B
 CC -> N
-CN -> C`.split('\n');
-//readInputArray('../input/day13.txt'); 
+CN -> C`.split('\n'); */
+readInputArray('../input/day14.txt'); 
 interface Dict {
     [key: string]: string;
 };

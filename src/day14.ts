@@ -81,7 +81,7 @@ for (let i=0;i<inputString.length-1;i++) {
 let singles:Freq = pairsToSingles(pairs,first,last);
 
 //loop n times
-for (let steps=1;steps<=10;steps++) {
+for (let steps=1;steps<=40;steps++) {
     let newPairs:Freq = {};
     Object.keys(pairs).forEach(pair =>{
         //create new pairs

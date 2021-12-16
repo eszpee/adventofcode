@@ -5,7 +5,7 @@ const inputfile = require("./inputfile");
 
 const inspect = require('util');
 
-const inputArray = //  inputfile.readInputArray('../input/day15.txt'); /*
+const inputArray =   inputfile.readInputArray('../input/day15.txt'); /*
  [
     '1163751742',
     '1381373672',

@@ -12,7 +12,7 @@ function shoot(x:number,y:number): number {
     let path:number[][] = [];
     let xpos=0; 
     let ypos=0;
-    while (ypos > targetMax[1]) {
+    while (ypos+100 > targetMax[1]) { //just some ugly bruteforce to ensure we're checking a long enough trajectory
         xpos += x;
         ypos += y;
         if (x > 0) {x--;} 
@@ -32,24 +32,21 @@ function shoot(x:number,y:number): number {
         }
     });
     if (hit) { return ymax; }
-    else { return -1; }
+    else { return -Infinity; }
 }
 
-/* console.log(shoot(7,2));
-console.log(shoot(6,3));
-console.log(shoot(9,0));
-console.log(shoot(17,-4));
-console.log(shoot(6,9));
- */
-
 let yMax = -Infinity;
-for (let vx=-100;vx<100;vx++) {
-    for (let vy=0;vy<200;vy++) {
+let goodShots = 0;
+for (let vx=-500;vx<500;vx++) {
+    for (let vy=-500;vy<500;vy++) {
         const sh = shoot(vx,vy);
-        if (sh > -1) {
-            console.log(vx,vy,sh);
+        if (sh > -Infinity) {
+//            console.log(vx,vy,sh);
             if (sh > yMax) {yMax = sh;}
+            goodShots++;
+
         }
     }
 }
 console.log('The highest I could get was',yMax);
+console.log('Number of good shots were',goodShots);

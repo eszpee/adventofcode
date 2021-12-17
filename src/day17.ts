@@ -41,7 +41,6 @@ for (let vx=-500;vx<500;vx++) {
     for (let vy=-500;vy<500;vy++) {
         const sh = shoot(vx,vy);
         if (sh > -Infinity) {
-//            console.log(vx,vy,sh);
             if (sh > yMax) {yMax = sh;}
             goodShots++;
 

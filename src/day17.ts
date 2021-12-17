@@ -1,6 +1,7 @@
 import { readInputArray } from "./inputfile";
 let inputArray:string[] = //readInputArray('../input/day14.txt'); 
-['target area: x=20..30, y=-10..-5'];
+['target area: x=192..251, y=-89..-59'];
+//['target area: x=20..30, y=-10..-5'];
 
 const regex = /-?\d+/g;
 const targetArea:number[] = inputArray[0].match(regex)?.map(Number);
@@ -34,8 +35,21 @@ function shoot(x:number,y:number): number {
     else { return -1; }
 }
 
-console.log(shoot(7,2));
+/* console.log(shoot(7,2));
 console.log(shoot(6,3));
 console.log(shoot(9,0));
 console.log(shoot(17,-4));
 console.log(shoot(6,9));
+ */
+
+let yMax = -Infinity;
+for (let vx=-100;vx<100;vx++) {
+    for (let vy=0;vy<200;vy++) {
+        const sh = shoot(vx,vy);
+        if (sh > -1) {
+            console.log(vx,vy,sh);
+            if (sh > yMax) {yMax = sh;}
+        }
+    }
+}
+console.log('The highest I could get was',yMax);

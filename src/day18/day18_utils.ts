@@ -145,3 +145,14 @@ export function magnitude(s:string):string {
     }
     return magnitude(s);
 }
+
+export function largestMagnitude(s:string[]):number {
+    const magnitudes = [];
+    for (let a=0;a<s.length;a++) {
+        for (let b=0;b<s.length;b++) {
+            magnitudes.push(parseInt(magnitude(addList([s[a],s[b]])),10));
+        }
+    }
+    magnitudes.sort((a,b) => b-a);
+    return magnitudes[0];
+}

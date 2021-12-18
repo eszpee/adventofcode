@@ -1,4 +1,4 @@
-import {doExplode, doSplit, doReduce, addList, magnitude, isNum} from './day18_utils';
+import {doExplode, doSplit, doReduce, addList, magnitude, largestMagnitude} from './day18_utils';
 
 const explodeIn = [
     '[[3,[2,[8,0]]],[9,[5,[7,0]]]]',
@@ -115,11 +115,14 @@ const magnitudeOut = [
     '4140'
 ];
 
+const largestMagnitudeIn:string[][] = [];
+largestMagnitudeIn.push(addListIn[5]);
+const largestMagnitudeOut = [3993];
+
 describe('doExplode()', () => {
     explodeIn.forEach((testCase,index) => 
         test(testCase, () => {
-            const exploded = doExplode(testCase);
-            expect(exploded).toEqual(explodeOut[index]);
+            expect(doExplode(testCase)).toEqual(explodeOut[index]);
         })
     );
 });
@@ -127,8 +130,7 @@ describe('doExplode()', () => {
 describe('doSplit()', () => {
     splitIn.forEach((testCase,index) => 
         test(testCase, () => {
-            const split = doSplit(testCase);
-            expect(split).toEqual(splitOut[index]);
+            expect(doSplit(testCase)).toEqual(splitOut[index]);
         })
     );
 });
@@ -136,8 +138,7 @@ describe('doSplit()', () => {
 describe('doReduce()', () => {
     reduceIn.forEach((testCase,index) => 
         test(testCase, () => {
-            const reduced = doReduce(testCase);
-            expect(reduced).toEqual(reduceOut[index]);
+            expect(doReduce(testCase)).toEqual(reduceOut[index]);
         })
     );
 });
@@ -145,8 +146,7 @@ describe('doReduce()', () => {
 describe('addList()', () => {
     addListIn.forEach((testCase,index) => 
         test(testCase.join(' / '), () => {
-            const added = addList(testCase);
-            expect(added).toEqual(addListOut[index]);
+            expect(addList(testCase)).toEqual(addListOut[index]);
         })
     );
 });
@@ -154,8 +154,15 @@ describe('addList()', () => {
 describe('magnitude()', () => {
     magnitudeIn.forEach((testCase,index) => 
         test(testCase, () => {
-            const magnituded = magnitude(testCase);
-            expect(magnituded).toEqual(magnitudeOut[index]);
+            expect(magnitude(testCase)).toEqual(magnitudeOut[index]);
         })
+    );
+});
+
+describe('largestMagnitude()', () => {
+    largestMagnitudeIn.forEach((testCase,index) => 
+        test(testCase.join(' / '), () => 
+            expect(largestMagnitude(testCase)).toEqual(largestMagnitudeOut[index])
+        )
     );
 });

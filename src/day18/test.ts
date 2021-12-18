@@ -1,5 +1,4 @@
-import { exit } from 'process';
-import {doExplode, doSplit, doReduce, addList, isNum} from './day18_utils';
+import {doExplode, doSplit, doReduce, addList, magnitude, isNum} from './day18_utils';
 
 const explodeIn = [
     '[[3,[2,[8,0]]],[9,[5,[7,0]]]]',
@@ -81,6 +80,25 @@ const addListOut = [
    '[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]'
 ];
 
+const magnitudeIn = [
+    '[1,2]',
+    '[[1,2],[[3,4],5]]',
+    '[[[[0,7],4],[[7,8],[6,0]]],[8,1]]',
+    '[[[[1,1],[2,2]],[3,3]],[4,4]]',
+    '[[[[3,0],[5,3]],[4,4]],[5,5]]',
+    '[[[[5,0],[7,4]],[5,5]],[6,6]]',
+    '[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]'
+];
+
+const magnitudeOut = [
+    '7',
+    '143',
+    '1384',
+    '445',
+    '791',
+    '1137',
+    '3488'
+];
 
 
 explodeIn.forEach((testCase,index) => 
@@ -111,8 +129,6 @@ addListIn.forEach((testCase,index) =>
       })
 );
 
-
-
 test(`isNum 1`, () => {
     expect(isNum('0')).toEqual(true);
 });
@@ -122,3 +138,11 @@ test(`isNum 2`, () => {
 test(`isNum 3`, () => {
     expect(isNum('')).toEqual(false);
 });
+
+magnitudeIn.forEach((testCase,index) => 
+    test(`Magnitude ${index}\n${testCase}`, () => {
+        const magnituded = magnitude(testCase);
+        expect(magnituded).toEqual(magnitudeOut[index]);
+      })
+);
+

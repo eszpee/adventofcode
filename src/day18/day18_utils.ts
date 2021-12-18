@@ -127,3 +127,32 @@ export function addList(s:string[]):string {
     }
     return s[0];
 }
+
+export function magnitude(s:string):string {
+    let mag = 0;
+    let processString = '';
+    let openPosition = -1;
+    for (let pointer = 0; pointer < s.length; pointer++) {
+        let currentChar = s.charAt(pointer);
+        if (currentChar === '[') {
+            openPosition = pointer;
+            processString = ''; 
+        }
+        else if (currentChar === ']') {
+            //we need to take the rightmost pair in processString and apply multiply/replace
+            const nums = processString.split(',').map(Number);
+            const newNums = nums[0]*3 + nums[1]*2;
+            s = s.slice(0,openPosition) + newNums + s.slice(openPosition+processString.length+2);
+            return magnitude(s);
+        }
+        else { // we have numbers or commas
+            if (openPosition > -1) {
+                processString += currentChar;
+            }
+            else { //only numbers in s, we're done!
+                return s;
+            }
+        }
+    }
+    return magnitude(s);
+}

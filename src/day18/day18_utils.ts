@@ -109,12 +109,13 @@ function doAdd(s1:string,s2:string):string {
 }
 
 export function addList(s:string[]):string {
-    while (s.length > 1) {
-        const first = s.shift() || '';
-        const second = s.shift() || '';
-        s.unshift(doAdd(first,second));
+    const sCopy = JSON.parse(JSON.stringify(s));
+    while (sCopy.length > 1) {
+        const first = sCopy.shift() || '';
+        const second = sCopy.shift() || '';
+        sCopy.unshift(doAdd(first,second));
     }
-    return s[0];
+    return sCopy[0];
 }
 
 export function magnitude(s:string):string {

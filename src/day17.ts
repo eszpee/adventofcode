@@ -43,7 +43,6 @@ for (let vx=-500;vx<500;vx++) {
         if (sh > -Infinity) {
             if (sh > yMax) {yMax = sh;}
             goodShots++;
-
         }
     }
 }

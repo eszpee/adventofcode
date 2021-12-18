@@ -3,7 +3,7 @@ export function isNum(s:string):boolean {
 }
 
 export function doExplode(s:string):string {
-    console.log('exploding',s);
+//    console.log('exploding',s);
     let openCounter = 0;
     for (let pointer = 0; pointer < s.length; pointer++) {
         let currentChar = s.charAt(pointer);
@@ -15,21 +15,52 @@ export function doExplode(s:string):string {
         }
         else if (isNum(currentChar)) { // we have a number
             if (openCounter >= 5) { // and it should be exploded
-                const mid = s.slice (pointer,pointer+3); // n,m
                 let first = s.slice(0,pointer-1);
-                let last = s.slice(pointer+4);
-                const midArr = mid.split(',').map(Number);
-                for (let i=first.length;i>=0;i--) {
+                let mid = '';
+                let last = '';
+
+                if (isNum(s.charAt(pointer+1))) { //double digit first number
+                    var firstNum = parseInt(s.slice(pointer,pointer+2),10); 
+                    pointer += 3;
+                }
+                else { // single digit first number
+                    var firstNum = parseInt(s.slice(pointer,pointer+1),10); 
+                    pointer += 2;
+                }
+
+                if (isNum(s.charAt(pointer+1))) { //double digit second number
+                    var secondNum = parseInt(s.slice(pointer,pointer+2),10); 
+                    pointer += 2;
+                }
+                else { // single digit second number
+                    var secondNum = parseInt(s.slice(pointer,pointer+1),10); 
+                    pointer += 1;
+                }
+                last = s.slice(pointer+1);
+
+                for (let i=first.length;i>=0;i--) { //first number going left
                     if (isNum(first.charAt(i))) {
-                        first = first.slice(0,i) + (parseInt(first.charAt(i),10) + midArr[0]) + first.slice(i+1);
+                        if (isNum(first.charAt(i-1))) { //double digit number damn it
+                            first = first.slice(0,i-1) + (parseInt(first.charAt(i-1)+first.charAt(i),10) + firstNum) + first.slice(i+1);
+                        }
+                        else {
+                            first = first.slice(0,i) + (parseInt(first.charAt(i),10) + firstNum) + first.slice(i+1);
+                        }
                         break;
                     }
                 }
 
-                for (let j=0;j<last.length;j++) {
-                    //console.log(last.charAt(j));
+                for (let j=0;j<last.length;j++) { //second number going right
                     if (isNum(last.charAt(j))) {
-                        last = last.slice(0,j) + (parseInt(last.charAt(j),10) + midArr[1]) + last.slice(j+1);
+                        if (isNum(last.charAt(j+1))) { //double digit number damn it
+                            console.log("double digit going right:", last.charAt(j), last.charAt(j+1));
+                            let newNum = parseInt(last.charAt(j)+last.charAt(j+1),10)+secondNum;
+                            console.log("New number",newNum);
+                            last = last.slice(0,j) + newNum + last.slice(j+2);
+                        }
+                        else {
+                            last = last.slice(0,j) + (parseInt(last.charAt(j),10) + secondNum) + last.slice(j+1);
+                        }
                         break;
                     }
                 }
@@ -45,7 +76,7 @@ export function doExplode(s:string):string {
 
 
 export function doSplit(s:string):string {
-    console.log('splitting',s);
+//    console.log('splitting',s);
     for (let pointer = 0; pointer < s.length; pointer++) {
         let currentChar = s.charAt(pointer);
         if (isNum(currentChar)) { // we have a number
@@ -64,22 +95,22 @@ export function doSplit(s:string):string {
 export function doReduce(s:string):string {
     console.log('reducing',s);
     const afterExplode = doExplode(s);
-    console.log('explode result:',afterExplode)
+//    console.log('explode result:',afterExplode)
     if (afterExplode === s) {
-        console.log('after explode result is the same, we only need to split now');
+//        console.log('after explode result is the same, we only need to split now');
         const afterSplit = doSplit(afterExplode);
-        console.log('split result:',afterSplit)
+//        console.log('split result:',afterSplit)
         if (afterSplit === afterExplode) {
-            console.log('after split result is also the same, we\'re done');
+//            console.log('after split result is also the same, we\'re done');
             return afterSplit;
         }
         else {
-            console.log('after split result is different, we need to start again');
+//            console.log('after split result is different, we need to start again');
             return doReduce(afterSplit);
         }
     }
     else {
-        console.log('after explode result is different, we need to start again');
+//        console.log('after explode result is different, we need to start again');
         return doReduce(afterExplode);
     }
 }

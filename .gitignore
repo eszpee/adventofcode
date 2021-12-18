@@ -1,6 +1,6 @@
 node_modules
 .DS_Store
-src/*.js
-!src/day15.js
+src/*/*.js
+!src/prevDays/day15.js
 !src/shortest*.js
 .vscode

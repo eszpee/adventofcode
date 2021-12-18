@@ -1,4 +1,4 @@
-import { readInputArray } from "./inputfile"
+import { readInputArray } from "../inputfile"
 
 function measurer(curr:string, index:number) {
     let depth = parseInt(curr);

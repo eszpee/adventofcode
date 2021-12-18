@@ -1,10 +1,10 @@
-import { readInputArray } from "./inputfile";
+import { readInputArray } from "../inputfile";
 let inputArray:string[] = //readInputArray('../input/day14.txt'); 
 ['target area: x=192..251, y=-89..-59'];
 //['target area: x=20..30, y=-10..-5'];
 
 const regex = /-?\d+/g;
-const targetArea:number[] = inputArray[0].match(regex)?.map(Number);
+const targetArea:any = inputArray[0].match(regex)?.map(Number); //sorry about any
 const targetMin = [targetArea[0],targetArea[1]]; 
 const targetMax = [targetArea[2],targetArea[3]]; 
 

@@ -1,4 +1,4 @@
-import { readInputArray } from "./inputfile";
+import { readInputArray } from "../inputfile";
 const inputArray:string[] = readInputArray('../input/day10.txt');
 interface Scores {
     [key: string]: number;

@@ -1,7 +1,7 @@
 const findShortestPath = require('./shortestPath');
 const findShortestPathWithLogs = require('./shortestPathWithLogs');
 const start = new Date();
-const inputfile = require("./inputfile");
+const inputfile = require("../inputfile");
 
 const inspect = require('util');
 

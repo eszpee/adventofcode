@@ -1,4 +1,4 @@
-import { readInputArray } from "./inputfile";
+import { readInputArray } from "../inputfile";
 const inputArray:string[] = readInputArray('../input/day06.txt');
 const daysToCheck = 256;
 

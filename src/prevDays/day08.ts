@@ -1,4 +1,4 @@
-import { readInputArray } from "./inputfile";
+import { readInputArray } from "../inputfile";
 const inputArray:string[] = readInputArray('../input/day08.txt');
 
 function is1478(s:string):boolean {

@@ -1,5 +1,5 @@
 const start = new Date();
-import { readInputArray } from "./inputfile";
+import { readInputArray } from "../inputfile";
 import { inspect } from 'util';
 
 const ITERMAX=Infinity;//100000000;
@@ -159,5 +159,5 @@ while ((stack.length>0) && (steps <= ITERMAX)) {
 }
 
 console.log("Solution to first part:",goodPaths.sort((a,b) => a-b)[0]-origMap[0][0]);
-const end = new Date() - start;
-console.log('Execution time: %dms', end)
+//const end = new Date() - start;
+//console.log('Execution time: %dms', end)

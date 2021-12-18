@@ -1,5 +1,5 @@
 import { SeaMap } from "./day05_class";
-import { readInputArray } from "./inputfile";
+import { readInputArray } from "../inputfile";
 const inputArray:string[] = readInputArray('../input/day05.txt');
 
 //determine map size. TODO: refactor SeaMap to have flexible map sizes...

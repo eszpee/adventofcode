@@ -1,4 +1,4 @@
-import { readInputArray } from "./inputfile";
+import { readInputArray } from "../inputfile";
 const inputArray:string[] = readInputArray('../input/day09.txt');
 
  function firstPart(map:number[][]):number {

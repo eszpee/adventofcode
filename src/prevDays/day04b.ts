@@ -76,7 +76,7 @@ function boardsStillPlaying(boards:BingoBoard[]):BingoBoard[] {
     return noBingoHere;
 }
 
-import { readInputArray } from "./inputfile";
+import { readInputArray } from "../inputfile";
 const inputArray:string[] = readInputArray('../input/day04.txt');
 const boards:BingoBoard[] = new Array();
 

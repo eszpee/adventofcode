@@ -1,6 +1,6 @@
 import { start } from 'repl';
 import { inspect } from 'util';
-import { readInputArray } from "./inputfile";
+import { readInputArray } from "../inputfile";
 let inputArray:string[] = 
 [
     'fs-end',

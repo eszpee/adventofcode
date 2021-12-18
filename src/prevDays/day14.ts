@@ -1,4 +1,4 @@
-import { readInputArray } from "./inputfile";
+import { readInputArray } from "../inputfile";
 let inputArray:string[] = readInputArray('../input/day14.txt'); 
 
 function inc(a:number|undefined,b:number=1):number {

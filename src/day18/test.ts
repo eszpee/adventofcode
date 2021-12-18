@@ -1,4 +1,4 @@
-import {doExplode, doSplit, doReduce, isNum} from './day18_utils';
+import {doExplode, doSplit, doReduce, addList, isNum} from './day18_utils';
 
 const explodeIn = [
     '[[3,[2,[8,0]]],[9,[5,[7,0]]]]',
@@ -38,6 +38,32 @@ const reduceOut = [
     '[[[[0,7],4],[[7,8],[6,0]]],[8,1]]',
 ];
 
+const addListIn = [
+    ['[1,1]',
+    '[2,2]',
+    '[3,3]',
+    '[4,4]'],
+    ['[1,1]',
+    '[2,2]',
+    '[3,3]',
+    '[4,4]',
+    '[5,5]'],
+    ['[1,1]',
+    '[2,2]',
+    '[3,3]',
+    '[4,4]',
+    '[5,5]',
+    '[6,6]']
+];
+
+const addListOut = [
+    '[[[[1,1],[2,2]],[3,3]],[4,4]]',
+    '[[[[3,0],[5,3]],[4,4]],[5,5]]',
+    '[[[[5,0],[7,4]],[5,5]],[6,6]]'
+];
+
+
+
 explodeIn.forEach((testCase,index) => 
     test(`Explode ${index}\n${testCase}`, () => {
         const exploded = doExplode(testCase);
@@ -56,6 +82,13 @@ reduceIn.forEach((testCase,index) =>
     test(`Reduce ${index}\n${testCase}`, () => {
         const reduced = doReduce(testCase);
         expect(reduced).toEqual(reduceOut[index]);
+      })
+);
+
+addListIn.forEach((testCase,index) => 
+    test(`Add ${index}\n${testCase}`, () => {
+        const added = addList(testCase);
+        expect(added).toEqual(addListOut[index]);
       })
 );
 

@@ -84,3 +84,15 @@ export function doReduce(s:string):string {
     }
 }
 
+function doAdd(s1:string,s2:string):string {
+    return doReduce('['+s1+','+s2+']');
+}
+
+export function addList(s:string[]):string {
+    while (s.length > 1) {
+        const first = s.shift() || '';
+        const second = s.shift() || '';
+        s.unshift(doAdd(first,second));
+    }
+    return s[0];
+}

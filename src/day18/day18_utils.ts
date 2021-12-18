@@ -3,7 +3,6 @@ export function isNum(s:string):boolean {
 }
 
 export function doExplode(s:string):string {
-//    console.log('exploding',s);
     let openCounter = 0;
     for (let pointer = 0; pointer < s.length; pointer++) {
         let currentChar = s.charAt(pointer);
@@ -53,9 +52,7 @@ export function doExplode(s:string):string {
                 for (let j=0;j<last.length;j++) { //second number going right
                     if (isNum(last.charAt(j))) {
                         if (isNum(last.charAt(j+1))) { //double digit number damn it
-                            console.log("double digit going right:", last.charAt(j), last.charAt(j+1));
                             let newNum = parseInt(last.charAt(j)+last.charAt(j+1),10)+secondNum;
-                            console.log("New number",newNum);
                             last = last.slice(0,j) + newNum + last.slice(j+2);
                         }
                         else {
@@ -76,7 +73,6 @@ export function doExplode(s:string):string {
 
 
 export function doSplit(s:string):string {
-//    console.log('splitting',s);
     for (let pointer = 0; pointer < s.length; pointer++) {
         let currentChar = s.charAt(pointer);
         if (isNum(currentChar)) { // we have a number
@@ -93,24 +89,17 @@ export function doSplit(s:string):string {
 }
 
 export function doReduce(s:string):string {
-    console.log('reducing',s);
     const afterExplode = doExplode(s);
-//    console.log('explode result:',afterExplode)
     if (afterExplode === s) {
-//        console.log('after explode result is the same, we only need to split now');
         const afterSplit = doSplit(afterExplode);
-//        console.log('split result:',afterSplit)
         if (afterSplit === afterExplode) {
-//            console.log('after split result is also the same, we\'re done');
             return afterSplit;
         }
         else {
-//            console.log('after split result is different, we need to start again');
             return doReduce(afterSplit);
         }
     }
     else {
-//        console.log('after explode result is different, we need to start again');
         return doReduce(afterExplode);
     }
 }

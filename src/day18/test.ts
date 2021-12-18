@@ -69,6 +69,18 @@ const addListIn = [
         '[1,[[[9,3],9],[[9,0],[0,7]]]]',
         '[[[5,[7,4]],7],1]',
         '[[[[4,2],2],6],[8,7]]'        
+    ],
+    [
+        '[[[0,[5,8]],[[1,7],[9,6]]],[[4,[1,2]],[[1,4],2]]]',
+        '[[[5,[2,8]],4],[5,[[9,9],0]]]',
+        '[6,[[[6,2],[5,6]],[[7,6],[4,7]]]]',
+        '[[[6,[0,7]],[0,9]],[4,[9,[9,0]]]]',
+        '[[[7,[6,4]],[3,[1,3]]],[[[5,5],1],9]]',
+        '[[6,[[7,3],[3,2]]],[[[3,8],[5,7]],4]]',
+        '[[[[5,4],[7,7]],8],[[8,3],8]]',
+        '[[9,3],[[9,9],[6,[4,9]]]]',
+        '[[2,[[7,7],7]],[[5,8],[[9,3],[0,2]]]]',
+        '[[[[5,2],5],[8,[3,7]]],[[5,[7,5]],[4,4]]]'
     ]
  ];
 
@@ -77,7 +89,8 @@ const addListOut = [
     '[[[[3,0],[5,3]],[4,4]],[5,5]]',
     '[[[[5,0],[7,4]],[5,5]],[6,6]]',
     '[[[[4,0],[5,4]],[[7,7],[6,0]]],[[8,[7,7]],[[7,9],[5,0]]]]',
-   '[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]'
+   '[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]',
+   '[[[[6,6],[7,6]],[[7,7],[7,0]]],[[[7,7],[7,7]],[[7,8],[9,9]]]]'
 ];
 
 const magnitudeIn = [
@@ -87,7 +100,8 @@ const magnitudeIn = [
     '[[[[1,1],[2,2]],[3,3]],[4,4]]',
     '[[[[3,0],[5,3]],[4,4]],[5,5]]',
     '[[[[5,0],[7,4]],[5,5]],[6,6]]',
-    '[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]'
+    '[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]',
+    '[[[[6,6],[7,6]],[[7,7],[7,0]]],[[[7,7],[7,7]],[[7,8],[9,9]]]]'
 ];
 
 const magnitudeOut = [
@@ -97,52 +111,51 @@ const magnitudeOut = [
     '445',
     '791',
     '1137',
-    '3488'
+    '3488',
+    '4140'
 ];
 
-
-explodeIn.forEach((testCase,index) => 
-    test(`Explode ${index}\n${testCase}`, () => {
-        const exploded = doExplode(testCase);
-        expect(exploded).toEqual(explodeOut[index]);
-      })
-);
-
-splitIn.forEach((testCase,index) => 
-    test(`Split ${index}\n${testCase}`, () => {
-        const split = doSplit(testCase);
-        expect(split).toEqual(splitOut[index]);
-      })
-);
-
-reduceIn.forEach((testCase,index) => 
-    test(`Reduce ${index}\n${testCase}`, () => {
-        const reduced = doReduce(testCase);
-        expect(reduced).toEqual(reduceOut[index]);
-      })
-);
-
-addListIn.forEach((testCase,index) => 
-    test(`Add ${index}\n${testCase}`, () => {
-        const added = addList(testCase);
-        expect(added).toEqual(addListOut[index]);
-      })
-);
-
-test(`isNum 1`, () => {
-    expect(isNum('0')).toEqual(true);
-});
-test(`isNum 2`, () => {
-    expect(isNum('[')).toEqual(false);
-});
-test(`isNum 3`, () => {
-    expect(isNum('')).toEqual(false);
+describe('doExplode()', () => {
+    explodeIn.forEach((testCase,index) => 
+        test(testCase, () => {
+            const exploded = doExplode(testCase);
+            expect(exploded).toEqual(explodeOut[index]);
+        })
+    );
 });
 
-magnitudeIn.forEach((testCase,index) => 
-    test(`Magnitude ${index}\n${testCase}`, () => {
-        const magnituded = magnitude(testCase);
-        expect(magnituded).toEqual(magnitudeOut[index]);
-      })
-);
+describe('doSplit()', () => {
+    splitIn.forEach((testCase,index) => 
+        test(testCase, () => {
+            const split = doSplit(testCase);
+            expect(split).toEqual(splitOut[index]);
+        })
+    );
+});
 
+describe('doReduce()', () => {
+    reduceIn.forEach((testCase,index) => 
+        test(testCase, () => {
+            const reduced = doReduce(testCase);
+            expect(reduced).toEqual(reduceOut[index]);
+        })
+    );
+});
+
+describe('addList()', () => {
+    addListIn.forEach((testCase,index) => 
+        test(testCase.join(' / '), () => {
+            const added = addList(testCase);
+            expect(added).toEqual(addListOut[index]);
+        })
+    );
+});
+
+describe('magnitude()', () => {
+    magnitudeIn.forEach((testCase,index) => 
+        test(testCase, () => {
+            const magnituded = magnitude(testCase);
+            expect(magnituded).toEqual(magnitudeOut[index]);
+        })
+    );
+});

@@ -1,5 +1,6 @@
+import {doExplode, doSplit, doReduce, addList, magnitude, isNum} from './day18_utils';
 import { readInputArray } from "../inputfile";
-let inputArray:string[] = //readInputArray('../input/day14.txt'); 
-['[[[[[9,8],1],2],3],4] '];
 
-console.log('hello world');
+let inputArray:string[] = readInputArray('../../input/day18.txt'); 
+
+console.log("Solution for first part:",magnitude(addList(inputArray)));

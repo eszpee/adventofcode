@@ -3,6 +3,7 @@ export function isNum(s:string):boolean {
 }
 
 export function doExplode(s:string):string {
+    console.log('exploding',s);
     let openCounter = 0;
     for (let pointer = 0; pointer < s.length; pointer++) {
         let currentChar = s.charAt(pointer);
@@ -26,7 +27,7 @@ export function doExplode(s:string):string {
                 }
 
                 for (let j=0;j<last.length;j++) {
-                    console.log(last.charAt(j));
+                    //console.log(last.charAt(j));
                     if (isNum(last.charAt(j))) {
                         last = last.slice(0,j) + (parseInt(last.charAt(j),10) + midArr[1]) + last.slice(j+1);
                         break;
@@ -43,7 +44,8 @@ export function doExplode(s:string):string {
 }
 
 
-export function doSplit(s:string) {
+export function doSplit(s:string):string {
+    console.log('splitting',s);
     for (let pointer = 0; pointer < s.length; pointer++) {
         let currentChar = s.charAt(pointer);
         if (isNum(currentChar)) { // we have a number
@@ -51,10 +53,34 @@ export function doSplit(s:string) {
                 let first = s.slice(0,pointer);
                 let last = s.slice(pointer+2);
                 let num = parseInt(s.slice(pointer,pointer+2));
-
                 s = first+'['+Math.floor(num/2)+','+Math.ceil(num/2)+']'+last;
+                break;
             }
         }
     }
     return s;
 }
+
+export function doReduce(s:string):string {
+    console.log('reducing',s);
+    const afterExplode = doExplode(s);
+    console.log('explode result:',afterExplode)
+    if (afterExplode === s) {
+        console.log('after explode result is the same, we only need to split now');
+        const afterSplit = doSplit(afterExplode);
+        console.log('split result:',afterSplit)
+        if (afterSplit === afterExplode) {
+            console.log('after split result is also the same, we\'re done');
+            return afterSplit;
+        }
+        else {
+            console.log('after split result is different, we need to start again');
+            return doReduce(afterSplit);
+        }
+    }
+    else {
+        console.log('after explode result is different, we need to start again');
+        return doReduce(afterExplode);
+    }
+}
+

@@ -1,4 +1,4 @@
-import {doExplode, doSplit, isNum} from './day18_utils';
+import {doExplode, doSplit, doReduce, isNum} from './day18_utils';
 
 const explodeIn = [
     '[[3,[2,[8,0]]],[9,[5,[7,0]]]]',
@@ -25,9 +25,18 @@ const splitIn = [
 const splitOut = [
     '[[3,[2,[8,0]]],[9,[5,[7,0]]]]',
     '[[[0,7],4],[[7,8],1]]',
-    '[[[[0,7],4],[[7,8],[0,[6,7]]]],[1,1]]',
+    '[[[[0,7],4],[[7,8],[0,13]]],[1,1]]',
 ];
 
+const reduceIn = [
+    '[[3,[2,[8,0]]],[9,[5,[7,0]]]]',
+    '[[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]',
+];
+
+const reduceOut = [
+    '[[3,[2,[8,0]]],[9,[5,[7,0]]]]',
+    '[[[[0,7],4],[[7,8],[6,0]]],[8,1]]',
+];
 
 explodeIn.forEach((testCase,index) => 
     test(`Explode ${index}\n${testCase}`, () => {
@@ -42,6 +51,14 @@ splitIn.forEach((testCase,index) =>
         expect(split).toEqual(splitOut[index]);
       })
 );
+
+reduceIn.forEach((testCase,index) => 
+    test(`Reduce ${index}\n${testCase}`, () => {
+        const reduced = doReduce(testCase);
+        expect(reduced).toEqual(reduceOut[index]);
+      })
+);
+
 
 
 test(`isNum 1`, () => {

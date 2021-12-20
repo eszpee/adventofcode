@@ -1,4 +1,16 @@
-import {deepCopy, cropImage} from './day20_utils';
+import {deepCopy, cropImage, bin2dec, enhance, litPixels} from './day20_utils';
+
+let sampleAlgo = '..#.#..#####.#.#.#.###.##.....###.##.#..###.####..#####..#....#..#..##..###..######.###...####..#..#####..##..#.#####...##.#.#..#.##..#.#......#.###.######.###.####...#.##.##..#..#..#####.....#.#....###..#.##......#.....#..#..#..##..#...##.######.####.####.#.#...#.......#..#.#.#...####.##.#......#..#...##.#.##..#...##.#.##..###.#......#.#.......#.#.#.####.###.##...#.....####.#..#..#.##.#....##..#.####....##...##..#...#......#.#.......#.......##..####..#...#.#.#...##..#.#..###..#####........#..####......#..#';
+sampleAlgo = sampleAlgo.replace(/\./g,'0');
+sampleAlgo = sampleAlgo.replace(/#/g,'1');
+
+const sampleImage = [
+    '10010',
+    '10000',
+    '11001',
+    '00100',
+    '00111'
+];
 
 
 describe('Helpers', () => {
@@ -8,6 +20,11 @@ describe('Helpers', () => {
         b[0][1] = 2;
         expect(a).toEqual([[0,1],[2,3]]);
         expect(b).toEqual([[0,2],[2,3]]);
+    });
+    test('bin2dec', () => {
+        expect(bin2dec('0000')).toEqual(0);
+        expect(bin2dec('1000')).toEqual(8);
+        expect(bin2dec('11111111')).toEqual(255);
     })
 });
 
@@ -128,5 +145,53 @@ describe('cropImage', () => {
             '000000000',
             '000000000'
     ]);
+    });
+});
+
+describe('enhance', () => {
+    const image = sampleImage;
+    test('Sample from task', () => {
+        expect(enhance(image,sampleAlgo)).toEqual([
+            '00000000000',
+            '00000000000',
+            '00011011000',
+            '00100101000',
+            '00110100100',
+            '00111100100',
+            '00010011000',
+            '00001100100',
+            '00000101000',
+            '00000000000',
+            '00000000000'
+        ]);
+    });
+    test('Second sample from task', () => {
+        expect(enhance(enhance(image,sampleAlgo),sampleAlgo)).toEqual([
+            '0000000000000',
+            '0000000000000',
+            '0000000001000',
+            '0001001010000',
+            '0010100011100',
+            '0010001101000',
+            '0010000010100',
+            '0001011111000',
+            '0000101111100',
+            '0000011011000',
+            '0000001110000',
+            '0000000000000',
+            '0000000000000'
+        ]);
+    })
+});
+
+describe ('litPixels', () => {
+    test('Simple test', () => {
+        expect(litPixels(['11010101','11100000'])).toEqual(8);
+    })
+})
+
+describe('Complete sample test', () => {
+    test('First part', () => {
+        expect(litPixels(enhance(enhance(sampleImage,sampleAlgo),sampleAlgo))).toEqual(35);
     });
 });

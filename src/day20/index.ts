@@ -1,3 +1,5 @@
+const MAXITER = 2;
+
 import {dot2bin, enhance, deepCopy, cropImage, bin2dec, litPixels} from './day20_utils';
 import { readInputArray } from "../inputfile";
 
@@ -12,22 +14,14 @@ for (let i=0;i<inputArray.length;i++) {
     inputArray[i] = dot2bin(inputArray[i]);
 }
 
-inputArray = cropImage(inputArray);
+let flipFlop = '0'
+for (let i=1;i<=MAXITER;i++) {
+    console.log(`iteration number ${i}`);
+    inputArray = enhance(inputArray,algo,flipFlop);
+    flipFlop = ''+(1-parseInt(flipFlop,10));    
+}
 
-console.log('input data');
-console.log(inputArray);
-console.log(`size: ${inputArray.length}x${inputArray[0].length}`);
-
-console.log('after first iteration');
-let firstIter = enhance(inputArray,algo,'0');
-console.log(firstIter);
-console.log(`size: ${firstIter.length}x${firstIter[0].length}`);
-console.log('after second iteration');
-let secondIter = enhance(firstIter,algo,'1');
-console.log(secondIter);
-console.log(`size: ${secondIter.length}x${secondIter[0].length}`);
-
-let numPix = litPixels(secondIter);
+let numPix = litPixels(inputArray);
 
 console.log(`Number of pixels lit: ${numPix}`);
 

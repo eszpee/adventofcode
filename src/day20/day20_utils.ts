@@ -7,19 +7,27 @@ export function bin2dec(bin:string):number {
     return num;
 }
 
-export function cropImage(image:string[]): string[] {
+export function dot2bin(s:string):string {
+    return s.replace(/\./g,'0').replace(/#/g,'1');
+}
+
+export function cropImage(image:string[],border:string='0'): string[] {
+    let nonBorder = '1';
+    if (border != '0') {
+        nonBorder = '0';
+    }
     let croppedImage:string[] = deepCopy(image);
 
     //top
     let line = croppedImage.shift() || '';
-    while (line?.match('1')?.length == undefined) {
+    while (line?.match(nonBorder)?.length == undefined) {
         line = croppedImage.shift() || '';
     }
     croppedImage.unshift(line);
 
     //bottom
     line = croppedImage.pop() || '';
-    while (line?.match('1')?.length == undefined) {
+    while (line?.match(nonBorder)?.length == undefined) {
         line = croppedImage.pop() || '';
     }
     croppedImage.push(line);
@@ -28,7 +36,7 @@ export function cropImage(image:string[]): string[] {
     let firstNonZero = -1;
     for (let i=0;i<croppedImage[0].length;i++) {
         for (let j=0;j<croppedImage.length;j++) {
-            if (croppedImage[j].charAt(i) == '1') {
+            if (croppedImage[j].charAt(i) == nonBorder) {
                 firstNonZero = i;
                 break;
             }
@@ -47,7 +55,7 @@ export function cropImage(image:string[]): string[] {
     let lastNonZero = -1;
     for (let i=croppedImage[0].length-1;i>-1;i--) {
         for (let j=0;j<croppedImage.length;j++) {
-            if (croppedImage[j].charAt(i) == '1') {
+            if (croppedImage[j].charAt(i) == nonBorder) {
                 lastNonZero = i;
                 break;
             }
@@ -62,23 +70,29 @@ export function cropImage(image:string[]): string[] {
         }
     }
 
-    //add 2-pixel border
+    //add 3-pixel border
     for (let i=0;i<croppedImage.length;i++) {
-        croppedImage[i] = '00'+croppedImage[i]+'00';
+        croppedImage[i] = border+border+border+croppedImage[i]+border+border+border;
     }
-    const zeroes:string = '0'.repeat(croppedImage[0].length);
+    const zeroes:string = border.repeat(croppedImage[0].length);
     croppedImage.push(zeroes);
     croppedImage.push(zeroes);
+    croppedImage.push(zeroes);
+    croppedImage.unshift(zeroes);
     croppedImage.unshift(zeroes);
     croppedImage.unshift(zeroes);
     return croppedImage;
 }
 
-export function enhance(image:string[],algo:string):string[] {
+export function enhance(image:string[],algo:string,border:string):string[] {
     //takes an image to enhance with algo, 
     //returns enhanced and cropped image
-    image = cropImage(image);
-    let newImage:string[] = deepCopy(image);
+    let newBorder = ''+(1-parseInt(border,10));
+    if (algo[0] == '0') {
+        newBorder = '0';
+    }
+    image = cropImage(image,border);
+    let newImage:string[] = [];
     
     function getPixel(image:string[],x:number,y:number):string {
         return  image[x-1].charAt(y-1) +
@@ -94,16 +108,18 @@ export function enhance(image:string[],algo:string):string[] {
                 image[x+1].charAt(y+1);
     }
 
-    for (let x=1;x<image.length-1;x++) { //no need to iterate on border
-        let oneLine = '0';
+    newImage.push(newBorder.repeat(image[0].length+2));
+    for (let x=1;x<image.length-1;x++) { //no need to iterate on the edge of border
+        let oneLine = newBorder;
         for (let y=1;y<image[0].length-1;y++) {
             const newChar = algo[bin2dec(getPixel(image,x,y))];
             oneLine += newChar;
         }
-        oneLine += '0';
+        oneLine += newBorder;
         newImage[x] = oneLine;
     }
-    return cropImage(newImage);
+    newImage.unshift(newBorder.repeat(image[0].length+2));
+    return cropImage(newImage,newBorder);
 
 }
 

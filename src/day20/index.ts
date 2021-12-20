@@ -1,4 +1,4 @@
-const MAXITER = 2;
+const MAXITER = 50;
 
 import {dot2bin, enhance, deepCopy, cropImage, bin2dec, litPixels} from './day20_utils';
 import { readInputArray } from "../inputfile";

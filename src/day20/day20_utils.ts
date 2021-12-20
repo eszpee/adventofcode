@@ -72,7 +72,7 @@ export function cropImage(image:string[],border:string='0'): string[] {
 
     //add 3-pixel border
     for (let i=0;i<croppedImage.length;i++) {
-        croppedImage[i] = border+border+border+croppedImage[i]+border+border+border;
+        croppedImage[i] = border.repeat(3)+croppedImage[i]+border.repeat(3);
     }
     const zeroes:string = border.repeat(croppedImage[0].length);
     croppedImage.push(zeroes);
@@ -85,10 +85,10 @@ export function cropImage(image:string[],border:string='0'): string[] {
 }
 
 export function enhance(image:string[],algo:string,border:string):string[] {
-    //takes an image to enhance with algo, 
+    //takes an image to enhance with algo, repeating border around the result
     //returns enhanced and cropped image
     let newBorder = ''+(1-parseInt(border,10));
-    if (algo[0] == '0') {
+    if (algo[0] == '0') { //we won't be alternating pixels in infinity after every iteration
         newBorder = '0';
     }
     image = cropImage(image,border);

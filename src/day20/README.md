@@ -1,3 +1,4 @@
+```
 eszpee@eszpees-2020-MacBook-Air day20 % npm test
 
 > test
@@ -34,3 +35,4 @@ eszpee@eszpees-2020-MacBook-Air day20 % npm start
 
 Number of pixels lit after 50 enhancements: 18269
 eszpee@eszpees-2020-MacBook-Air day20 % 
+```

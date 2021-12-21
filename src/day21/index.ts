@@ -47,3 +47,65 @@ while ((p1score<1000) && (p2score<1000)) {
 
 const loser = p1score < p2score? p1score:p2score;
 console.log(`Answer to first part: ${loser * allThrows}`);
+
+
+const threeThrowScores = [  
+    //1
+    3,  4,  5,
+    4,  5,  6,
+    5,  6,  7,
+
+    //2
+    4,  5,  6,
+    5,  6,  7,
+    6,  7,  8,
+
+    //3
+    5,  6,  7,
+    6,  7,  8,
+    7,  8,  9
+];
+
+/* game will end when someone reaches 21 points 
+max score in every round is 9 (3*3)
+min score in every round is 3 (1*3)
+start position is key for winning
+sample start positions: p1:4, p2:8
+round1: p1 starts, makes 9 points, p1score: 13
+p2 continues
+round2: p1 makes 9 points, gets to 22, wins
+questions:
+1. how many dice throws led to winning score (in this case, one of the rounds can be 2 or 3 too!)
+- 1st round: 3
+- 2nd player: 6
+- 2nd round p1: 9
+2. how many extra universes were spawn during these throws?
+
+IDEA:
+ - let's count that in how many universes has player 1 score of 1, 2, 3, 4, etc., 
+    and only increase the number of universes after each round
+    data structure: [Nan, 0, 0, 0, 3, 9], etc for each player
+
+- actually there are only 3x3 dice throws, p1 starts, gets 9 points max, p2's turn, universes increase, p1 comes again, and wins
+- actually, no, there are lot of universes where she doesn't win damn it
+- the longest game is if everyone throws 1s and in this case with a start point at "8", there are 5 rounds for p1, 4 for p2 aargh
+
+1st round 1st half: p1 threw 3 times, of the 27 universes, player1s scores:
+p1scr	in universes
+    3	1
+    4	3
+    5	6
+    6	7
+    7	6
+    8	3
+    9	1
+
+
+    */
+let universes = 1;
+const newUniversesPerRound = 3*3*3 * 3*3*3;
+for (let rounds = 1; rounds <=7; rounds++) {
+    console.log(`round number: ${rounds}, universes: ${universes}`);
+    universes = universes * newUniversesPerRound;
+}
+const sampleUniverses = 786316482957123;

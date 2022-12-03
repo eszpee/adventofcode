@@ -4,5 +4,8 @@
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.11",
     "jest": "^27.4.5"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }

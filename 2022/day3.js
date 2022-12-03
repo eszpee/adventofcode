@@ -1,5 +1,5 @@
 const is = require("lodash"); // Import the lodash library
-const inputArray = //readInput("./day3.txt"); /*
+const inputArray = readInput("./day3.txt"); /*
  [
     'vJrwpWtwJgWrhcsFMMfFFhFp',
     'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL',

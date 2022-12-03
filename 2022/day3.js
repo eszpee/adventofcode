@@ -1,4 +1,6 @@
-const inputArray = //  inputfile.readInputArray('day3.txt'); /*
+const inputArray = readInput("./day3.txt");
+//console.log(inputArray);
+/*
  [
     'vJrwpWtwJgWrhcsFMMfFFhFp',
     'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL',
@@ -48,3 +50,14 @@ function commonLetters(str1, str2) {
       return 0;
     }
   }
+
+function readInput(filename) {
+  const fs = require('fs');
+
+  try {
+    const data = fs.readFileSync(filename, 'utf8');
+    return data.split(/\r?\n/);
+  } catch (err) {
+    console.error(err);
+  }
+}

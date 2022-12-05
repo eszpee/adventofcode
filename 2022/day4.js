@@ -1,4 +1,4 @@
-const inputArray = // readInput("./day4.txt"); /*
+const inputArray = readInput("./day4.txt"); /*
  [
 '    [D]    ',
 '[N] [C]    ',
@@ -17,8 +17,7 @@ moves[] = [[1,2,1],[3,1,3]...]
 */
 
 var platforms = new Array;
-platforms = [[],[],[]
-//,[],[],[],[],[],[]
+platforms = [[],[],[],[],[],[],[],[],[]
 ];
 var moves = new Array;
 

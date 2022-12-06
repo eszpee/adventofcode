@@ -1,4 +1,4 @@
-const inputArray = readInput("./day4.txt"); /*
+const inputArray = readInput("./day5.txt"); /*
  [
 '    [D]    ',
 '[N] [C]    ',

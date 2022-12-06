@@ -4,14 +4,11 @@ const input = //readInput("./day6.txt"); /*
 //]; //*/
 
 //iterate pointer over string
-//console.log(fourDifferent('abta'));
-//console.log(fourDifferent('kepz'));
+var pointer = 13;                             //backwards looking for easy result printing
 
-var pointer = 13;
-
-while (true) {
+while (true) {                                //i'm not proud
   var substr = input.substr(pointer-13,14);
-  pointer++;
+  pointer++;                                  //increase now for easy result printing
   if (fourDifferent(substr)) {
     console.log('first part:',pointer);
     break;
@@ -25,7 +22,6 @@ function fourDifferent(str) {
   var chars = new Array();
   chars = str.split('');
   chars.sort();
-//  console.log(chars);
   var alldifferent = true;
   for (i=1;i<chars.length;i++) {
     if (chars[i-1] === chars [i]) {

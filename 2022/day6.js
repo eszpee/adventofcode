@@ -7,10 +7,10 @@ const input = //readInput("./day6.txt"); /*
 //console.log(fourDifferent('abta'));
 //console.log(fourDifferent('kepz'));
 
-var pointer = 3;
+var pointer = 13;
 
 while (true) {
-  var substr = input.substr(pointer-3,4);
+  var substr = input.substr(pointer-13,14);
   pointer++;
   if (fourDifferent(substr)) {
     console.log('first part:',pointer);

@@ -73,6 +73,20 @@ Object.keys(files).forEach(function(key, index) {
 
 console.log("First part:",sum);
 
+var freespace = 70000000-files['/'];
+console.log("Free space",freespace);
+var needed = 30000000-freespace;
+
+var smallest = 70000000;
+Object.keys(files).forEach(function(key, index) {
+  if ((key.match(/\/$/)) && (files[key] > needed) && (files[key] < smallest)) {
+    smallest = files[key];
+  }
+});
+
+console.log("Second part:",smallest);
+
+
 function readInput(filename) {
   const fs = require('fs');
 

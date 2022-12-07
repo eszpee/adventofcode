@@ -46,13 +46,21 @@ input.forEach(line => {
         files[workingdir] += Number(size);
         workingdir = workingdir.replace(/[a-z]\/$/,'');
       }
-      //TODO: add the same size to all parent directories
+      files['/'] += Number(size);
       break;
   }
   
 });
 
-console.log(files);
+//console.log(files);
+var sum = 0;
+Object.keys(files).forEach(function(key, index) {
+  if ((key.match(/\/$/)) && (files[key] <= 100000)) {
+    sum += files[key];
+  }
+});
+
+console.log("First part:",sum);
 
 function readInput(filename) {
   const fs = require('fs');

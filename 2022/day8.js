@@ -36,18 +36,14 @@ function scene(startX,startY) {
   //console.log('checking up');
   count[0] = 1;
   for (var y=startY-1;y>0;y--) {
-    //console.log('y',y);
-    //console.log('comparing',input[y].charAt(startX),'with',tree);
     if (input[y].charAt(startX) < tree) { count[0]++;}
     else {break;}
   }
-  console.log('visible trees:',count[0]);
+  //console.log('visible trees:',count[0]);
 
   //console.log('checking left');
   count[1] = 1;
   for (var x=startX-1;x>0;x--) {
-    //console.log('y',y);
-    //console.log('comparing',input[y].charAt(startX),'with',tree);
     if (input[startY].charAt(x) < tree) { count[1]++;}
     else {break;}
   }
@@ -56,8 +52,6 @@ function scene(startX,startY) {
   //console.log('checking right');
   count[2] = 1;
   for (var x=startX+1;x<input[startY].length-1;x++) {
-    //console.log('y',y);
-    //console.log('comparing',input[startY].charAt(x),'with',tree);
     if (input[startY].charAt(x) < tree) { count[2]++;}
     else {break;}
   }
@@ -66,15 +60,13 @@ function scene(startX,startY) {
   //console.log('checking down');
   count[3] = 1;
   for (var y=startY+1;y<input.length-1;y++) {
-    //console.log('y',y);
-    //console.log('comparing',input[y].charAt(startX),'with',tree);
     if (input[y].charAt(startX) < tree) { count[3]++;}
     else {break;}
   }
   //console.log('visible trees:',count[3]);
 
   all = count[0]*count[1]*count[2]*count[3];
-  console.log('area size',all);
+  //console.log('area size',all);
   return all;
 }
 

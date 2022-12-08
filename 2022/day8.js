@@ -8,17 +8,27 @@ const input = readInput("./day8-sample.txt"); /*
 // data structure:
 //forest['123','345','453'];
 
-var sum=0;
-//go over input, fill out files associative array to have sizes for all directories
-input.forEach(line => {
+var visible=(input[0].length-1)*4; //edges
 
-});
+for (var y=1;y<input.length-1;y++) { //only checking within edges
+  for (var x=1;x<input[y].length-1;x++) { //maybe not square
+    console.log(input[y].charAt(x));
+      if (
+        (input[y].charAt(x) > input[y-1].charAt(x)) 
+          ||
+        (input[y].charAt(x) > input[y].charAt(x-1)) 
+          ||
+        (input[y].charAt(x) > input[y].charAt(x+1)) 
+          ||
+        (input[y].charAt(x) > input[y+1].charAt(x)) 
+      ) { console.log('v');visible++; }
+  }
+}
 
 
+console.log("First part:",visible);
 
-console.log("First part:",sum);
-
-console.log("Second part:",sum);
+//console.log("Second part:",visible);
 
 
 function readInput(filename) {

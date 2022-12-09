@@ -1,4 +1,4 @@
-const input = readInput("./day9-sample.txt"); 
+const input = readInput("./day9-sample2.txt"); 
 const maxknots = 9;
 String.prototype.replaceAt = function(index, replacement) {
   return this.substring(0, index) + replacement + this.substring(index + replacement.length);
@@ -53,7 +53,8 @@ input.forEach(line => {
 console.log("Result:",visited.size);
 
 function drawRope(msg) {
-  const squaresize = 6;
+  const squaresize = 30;
+  const offset = Math.floor(squaresize/2);
   console.log('\033[2J');
   console.log(msg,'\n');
   var out = new Array();
@@ -65,8 +66,8 @@ function drawRope(msg) {
   }
   for (var i=maxknots;i>=0;i--) {
     //putting rope[i] to the map
-    const row = squaresize-rope[i].y;
-    const col = rope[i].x;
+    const row = squaresize-rope[i].y-offset;
+    const col = rope[i].x+offset;
     out[row] = out[row].replaceAt(col,i.toString());
   }
   console.log(out.join('\n'));

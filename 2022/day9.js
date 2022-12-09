@@ -1,10 +1,10 @@
-const input = readInput("./day9.txt"); 
+const input = readInput("./day9-sample2.txt"); 
 const maxknots = 9;
 String.prototype.replaceAt = function(index, replacement) {
   return this.substring(0, index) + replacement + this.substring(index + replacement.length);
 }
 const {execSync} = require('child_process');
-const v = false; //visualization on
+const v = true; //visualization on
 
 
 /* data structures:

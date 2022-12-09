@@ -1,9 +1,10 @@
-const input = readInput("./day9-sample2.txt"); 
+const input = readInput("./day9.txt"); 
 const maxknots = 9;
 String.prototype.replaceAt = function(index, replacement) {
   return this.substring(0, index) + replacement + this.substring(index + replacement.length);
 }
 const {execSync} = require('child_process');
+const v = false; //visualization on
 
 
 /* data structures:
@@ -50,28 +51,31 @@ input.forEach(line => {
     }
 });
 
-console.log("Result:",visited.size);
+drawRope('Result: '+visited.size);
 
 function drawRope(msg) {
   const squaresize = 30;
   const offset = Math.floor(squaresize/2);
-  console.log('\033[2J');
+  console.log('\033[2J');         //clear screen
   console.log(msg,'\n');
-  var out = new Array();
-  for(var x=0;x<=squaresize;x++) {
-    out[x] = '';
-    for (var y=0;y<=squaresize;y++) {
-      out[x] += '.';
+  if (v) {
+    var out = new Array();
+    for(var x=0;x<=squaresize;x++) {
+      out[x] = '';
+      for (var y=0;y<=squaresize;y++) {
+        out[x] += '·';
+      }
     }
+    for (var i=maxknots;i>=0;i--) {
+      //putting rope[i] to the map
+      const row = squaresize-rope[i].y-offset;
+      const col = rope[i].x+offset;
+      out[row] = out[row].replaceAt(col,i.toString());
+    }
+    console.log(out.join('\n'));
+    console.log('\n');
+    execSync('sleep 0.001'); // block process for a second.
   }
-  for (var i=maxknots;i>=0;i--) {
-    //putting rope[i] to the map
-    const row = squaresize-rope[i].y-offset;
-    const col = rope[i].x+offset;
-    out[row] = out[row].replaceAt(col,i.toString());
-  }
-  console.log(out.join('\n'));
-  execSync('sleep 0.01'); // block process for a second.
 }
 
 function followHead(h,msg) {

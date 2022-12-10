@@ -1,4 +1,4 @@
-const input = readInput("./day10-sample2.txt"); 
+const input = readInput("./day10.txt"); 
 /* data structures:
 code[[1, 'noop'],[3,'addx'[6]]]   //processed input, adding run time to all commands, splitting parameters
                                   //idea is to simply iterate over this, and decrease run time at each cpu cycle, execute at 0
@@ -47,10 +47,10 @@ while (code.length>0) {
   //console.log(spritePosition(cpu_cycle));
 
   if (spriteOverlap(crt_index)) {
-    crt += '#';
+    crt += '█';
   }
   else {
-    crt += '.';
+    crt += ' ';
   }
   if (crt_index == 39) {
     crt += '\n';

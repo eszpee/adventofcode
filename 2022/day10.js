@@ -37,16 +37,14 @@ input.forEach(line => {
 //Main loop to run code. Every iteration is one CPU cycle.
 var cpu_cycle = 0;
 while (code.length>0) {
-
+  //CPU step
   cpu_cycle++;
   if (code[0][0] > 0) {
     code[0][0]--;
   }
 
-  //console.log("\nStart cycle: ",cpu_cycle);
-  //console.log(spritePosition(cpu_cycle));
-
-  if (spriteOverlap(crt_index)) {
+  //CRT update
+  if (Math.abs(crt_index-reg_x) <= 1) {      //checking for overlap with 3 pixel wide sprite 
     crt += '█';
   }
   else {
@@ -59,8 +57,8 @@ while (code.length>0) {
   else {
     crt_index++;
   }
-  //console.log("Current CRT row:",crt);
 
+  //Code execution
   if (code[0][0] == 0) {
     current_command = code.shift();
     switch (current_command[1]) {
@@ -71,10 +69,11 @@ while (code.length>0) {
         break;
     }
   }
-  hist_x.push(reg_x);
 
+  hist_x.push(reg_x);
 }
 
+//Calculating first part
 var currCycle = 20;
 var sum = 0;
 while (true) {
@@ -90,25 +89,6 @@ while (true) {
 console.log('First part:',sum);
 console.log('Second part:');
 console.log(crt);
-
-function spriteOverlap(idx) {
-  //input: index of the pixel being drawn
-  //output: if the index is overlapping a sprite (based on reg_x) 
-  return (Math.abs(idx-reg_x) <= 1); //sprites are 3 pixel wide 
-}
-
-function spritePosition() {
-  var crtline = '';
-  for (var i=0;i<40;i++) {
-    if (spriteOverlap(i)) {
-      crtline += '#';
-    }
-    else {
-      crtline += '.';
-    }
-  }
-  return ('Sprite position: '+crtline);
-}
 
 function readInput(filename) {
   const fs = require('fs');

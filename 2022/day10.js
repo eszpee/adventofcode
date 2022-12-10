@@ -19,7 +19,7 @@ hist_x[1,5,6,-2,3]                //value of register x at the index'th cpu cycl
 
 const runtime = {
   noop: 1,
-  addx: 3,
+  addx: 2,
 }
 var reg_x = 1;
 var hist_x = new Array;
@@ -33,9 +33,9 @@ input.forEach(line => {
 });
 
 //Main loop to run code
-var cpu_cycle = 0;                    //TODO: we probably won't need this
+var cpu_cycle = 1;                    //TODO: we probably won't need this
 while (code.length>0) {
-  console.log(code);
+  console.log(cpu_cycle,code,reg_x);
   if (code[0][0] > 0) {
     code[0][0]--;
   }
@@ -52,7 +52,7 @@ while (code.length>0) {
   hist_x.push(reg_x);
   cpu_cycle++;
 }
-hist_x.shift()                        //there's no 0th cpu cycle
+//hist_x.shift()                        //there's no 0th cpu cycle - but it's fine, we won't use it anyway
 console.log(hist_x);
 
 function readInput(filename) {

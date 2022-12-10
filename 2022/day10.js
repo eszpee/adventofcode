@@ -35,10 +35,8 @@ input.forEach(line => {
 });
 
 //Main loop to run code. Every iteration is one CPU cycle.
-var cpu_cycle = 0;
 while (code.length>0) {
   //CPU step
-  cpu_cycle++;
   if (code[0][0] > 0) {
     code[0][0]--;
   }

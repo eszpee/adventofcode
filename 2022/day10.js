@@ -1,4 +1,4 @@
-const input = readInput("./day10-sample.txt"); 
+const input = readInput("./day10-sample2.txt"); 
 /* data structures:
 code[[1, 'noop'],[3,'addx'[6]]]   //processed input, adding run time to all commands, splitting parameters
                                   //idea is to simply iterate over this, and decrease run time at each cpu cycle, execute at 0
@@ -22,7 +22,7 @@ const runtime = {
   addx: 2,
 }
 var reg_x = 1;
-var hist_x = new Array;
+var hist_x = new Array(2);            //first item empty so we pad for the cpu cycles at the end
 
 //Process input to create code array
 var code = new Array();
@@ -35,7 +35,7 @@ input.forEach(line => {
 //Main loop to run code
 var cpu_cycle = 1;                    //TODO: we probably won't need this
 while (code.length>0) {
-  console.log(cpu_cycle,code,reg_x);
+//  console.log(cpu_cycle,code,reg_x);
   if (code[0][0] > 0) {
     code[0][0]--;
   }
@@ -52,8 +52,20 @@ while (code.length>0) {
   hist_x.push(reg_x);
   cpu_cycle++;
 }
-//hist_x.shift()                        //there's no 0th cpu cycle - but it's fine, we won't use it anyway
-console.log(hist_x);
+
+var currCycle = 20;
+var sum = 0;
+while (true) {
+  if (hist_x[currCycle]) {
+    sum += hist_x[currCycle] * currCycle;
+    currCycle+= 40;
+  }
+  else {
+    break;
+  }
+}
+
+console.log('First part:',sum);
 
 function readInput(filename) {
   const fs = require('fs');

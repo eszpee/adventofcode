@@ -1,4 +1,4 @@
-const input = readInput("./day10.txt"); 
+const input = readInput("./day10-sample2.txt"); 
 /* data structures:
 code[[1, 'noop'],[3,'addx'[6]]]   //processed input, adding run time to all commands, splitting parameters
                                   //idea is to simply iterate over this, and decrease run time at each cpu cycle, execute at 0
@@ -23,6 +23,8 @@ const runtime = {
 }
 var reg_x = 1;
 var hist_x = new Array(2);            //first item empty so we pad for the cpu cycles at the end
+var crt = '';                         //only one row for now
+var crt_index = 0;                    //pixel (column) being drawn
 
 //Process input to create code array
 var code = new Array();
@@ -32,13 +34,33 @@ input.forEach(line => {
   code.push(commands);
 });
 
-//Main loop to run code
-var cpu_cycle = 1;                    //TODO: we probably won't need this
+//Main loop to run code. Every iteration is one CPU cycle.
+var cpu_cycle = 0;
 while (code.length>0) {
-//  console.log(cpu_cycle,code,reg_x);
+
+  cpu_cycle++;
   if (code[0][0] > 0) {
     code[0][0]--;
   }
+
+  //console.log("\nStart cycle: ",cpu_cycle);
+  //console.log(spritePosition(cpu_cycle));
+
+  if (spriteOverlap(crt_index)) {
+    crt += '#';
+  }
+  else {
+    crt += '.';
+  }
+  if (crt_index == 39) {
+    crt += '\n';
+    crt_index = 0;
+  }
+  else {
+    crt_index++;
+  }
+  //console.log("Current CRT row:",crt);
+
   if (code[0][0] == 0) {
     current_command = code.shift();
     switch (current_command[1]) {
@@ -50,7 +72,7 @@ while (code.length>0) {
     }
   }
   hist_x.push(reg_x);
-  cpu_cycle++;
+
 }
 
 var currCycle = 20;
@@ -66,6 +88,27 @@ while (true) {
 }
 
 console.log('First part:',sum);
+console.log('Second part:');
+console.log(crt);
+
+function spriteOverlap(idx) {
+  //input: index of the pixel being drawn
+  //output: if the index is overlapping a sprite (based on reg_x) 
+  return (Math.abs(idx-reg_x) <= 1); //sprites are 3 pixel wide 
+}
+
+function spritePosition() {
+  var crtline = '';
+  for (var i=0;i<40;i++) {
+    if (spriteOverlap(i)) {
+      crtline += '#';
+    }
+    else {
+      crtline += '.';
+    }
+  }
+  return ('Sprite position: '+crtline);
+}
 
 function readInput(filename) {
   const fs = require('fs');

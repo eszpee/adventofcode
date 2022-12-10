@@ -17,10 +17,43 @@ hist_x[1,5,6,-2,3]                //value of register x at the index'th cpu cycl
 3. check hist_x at every 20th occurrence
 */
 
+const runtime = {
+  noop: 1,
+  addx: 3,
+}
+var reg_x = 1;
+var hist_x = new Array;
+
+//Process input to create code array
+var code = new Array();
 input.forEach(line => {
+  var commands = line.split(' ');
+  commands.unshift(runtime[commands[0]]);
+  code.push(commands);
 });
 
-
+//Main loop to run code
+var cpu_cycle = 0;                    //TODO: we probably won't need this
+while (code.length>0) {
+  console.log(code);
+  if (code[0][0] > 0) {
+    code[0][0]--;
+  }
+  if (code[0][0] == 0) {
+    current_command = code.shift();
+    switch (current_command[1]) {
+      case 'noop':        
+        break;
+      case 'addx':
+        reg_x += Number(current_command[2]);
+        break;
+    }
+  }
+  hist_x.push(reg_x);
+  cpu_cycle++;
+}
+hist_x.shift()                        //there's no 0th cpu cycle
+console.log(hist_x);
 
 function readInput(filename) {
   const fs = require('fs');

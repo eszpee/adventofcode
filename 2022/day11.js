@@ -1,5 +1,6 @@
-const input = readInput("./day11-sample.txt"); const maxmonkeys = 3; //should change together
-const rounds = 20;
+const input = readInput("./day11.txt"); const maxmonkeys = 7; //should change together
+const rounds = 10000;
+var gigaMod = 1;
 /* data structures:
 monkeys[] {
   items:Array(),
@@ -9,7 +10,6 @@ monkeys[] {
   inspects: 0
 }
 */ 
-
 /* algo:
   process input to create monkeys[]
   loop for rounds (20)
@@ -22,6 +22,14 @@ monkeys[] {
         Current worry level is not divisible by 23.
         Item with worry level 500 is thrown to monkey 3.
   print the multiplication of the two highest inspect levels for first solution
+
+  algo day 2:
+    - add to round_results[] array after every round:
+        inspects[]          //number of inspections for every monkey
+        delta_inspects[]    //difference in number of inspections for every monkey
+    - check for a few hundred rounds and see if there's any pattern... namely, same amount of delta after x round
+    - calculate for 10000 rounds: start+(10000/cycle)*diff, or something like that
+    - multiply highest two
 */
 
 var monkeys = new Array();               //it's a competition, not for display! :D
@@ -32,6 +40,14 @@ for (var i=0;i<=maxmonkeys;i++) {
     test: 1000,     //divisibility
     throw: { true: 1000, false: 1000},
     inspects: 0  
+  }
+}
+
+var round_results = new Array();
+for (var i=1; i<=rounds;i++) {
+  round_results[i] = {
+    inspects: [],
+    delta_inspects: []
   }
 }
 
@@ -49,9 +65,7 @@ for (var i = 0; i<input.length;i++) {
   }
   else if (line.charAt(2) == 'T') {
     monkeys[currentmonkey].test = Number(line.split('by ')[1]);
-  }
-  else if (line.charAt(2) == 'T') {
-    monkeys[currentmonkey].test = Number(line.split('by ')[1]);
+    gigaMod = gigaMod * monkeys[currentmonkey].test;
   }
   else if (line.charAt(7) == 't') {
     monkeys[currentmonkey].throw.true = Number(line.split('monkey ')[1]);
@@ -63,20 +77,10 @@ for (var i = 0; i<input.length;i++) {
     //nah
   }
 }
-
+console.log(gigaMod);
 
 for (var round = 1; round <= rounds; round++) {
   for (var monkey = 0; monkey <= maxmonkeys; monkey++) {
-/*
-      loop for items
-        Monkey inspects an item with a worry level of 79.
-        Increase inspect counter for monkey
-        Worry level is multiplied by 19 to 1501.
-        Monkey gets bored with item. Worry level is divided by 3 to 500.
-        Current worry level is not divisible by 23.
-        Item with worry level 500 is thrown to monkey 3.
-
-*/
     while (monkeys[monkey].items.length > 0) {
       var worry = monkeys[monkey].items.shift();
       monkeys[monkey].inspects++;
@@ -96,7 +100,7 @@ for (var round = 1; round <= rounds; round++) {
           worry = worry * Number(monkeys[monkey].operation.split(' ')[1]);
         }
       }
-      worry = Math.floor(worry / 3);
+      //worry = Math.floor(worry / 3);
       var throwto = 0;
       if (worry % monkeys[monkey].test == 0) {
         throwto = monkeys[monkey].throw.true;
@@ -104,10 +108,26 @@ for (var round = 1; round <= rounds; round++) {
       else {
         throwto = monkeys[monkey].throw.false;
       }
-      monkeys[throwto].items.push(worry);
+      monkeys[throwto].items.push(worry % gigaMod);
+    }
+  }
+  for (var m=0;m<=maxmonkeys;m++) {
+    round_results[round].inspects[m] = monkeys[m].inspects;
+    if (round > 1) {
+      round_results[round].delta_inspects[m] = round_results[round].inspects[m] - round_results[round-1].inspects[m];
+    }
+    else {
+      round_results[round].delta_inspects[m] = round_results[round].inspects[m];
     }
   }
 }
+
+//console.log(round_results);
+console.log(1,round_results[1]);
+console.log(20,round_results[20]);
+console.log(1000,round_results[1000]);
+console.log(2000,round_results[2000]);
+console.log(10000,round_results[10000]);
 
 var count_inspects = new Array();
 monkeys.forEach(m => {

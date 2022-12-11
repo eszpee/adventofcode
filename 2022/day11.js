@@ -1,5 +1,6 @@
-const input = readInput("./day11-sample.txt"); const maxmonkeys = 3; //should change together
+const input = readInput("./day11.txt"); const maxmonkeys = 7; //should change together
 const rounds = 10000;
+var gigaMod = 1;
 /* data structures:
 monkeys[] {
   items:Array(),
@@ -65,9 +66,7 @@ for (var i = 0; i<input.length;i++) {
   }
   else if (line.charAt(2) == 'T') {
     monkeys[currentmonkey].test = Number(line.split('by ')[1]);
-  }
-  else if (line.charAt(2) == 'T') {
-    monkeys[currentmonkey].test = Number(line.split('by ')[1]);
+    gigaMod = gigaMod * monkeys[currentmonkey].test;
   }
   else if (line.charAt(7) == 't') {
     monkeys[currentmonkey].throw.true = Number(line.split('monkey ')[1]);
@@ -79,7 +78,7 @@ for (var i = 0; i<input.length;i++) {
     //nah
   }
 }
-
+console.log(gigaMod);
 
 for (var round = 1; round <= rounds; round++) {
   for (var monkey = 0; monkey <= maxmonkeys; monkey++) {
@@ -110,7 +109,7 @@ for (var round = 1; round <= rounds; round++) {
       else {
         throwto = monkeys[monkey].throw.false;
       }
-      monkeys[throwto].items.push(worry);
+      monkeys[throwto].items.push(worry % gigaMod);
     }
   }
   for (var m=0;m<=maxmonkeys;m++) {

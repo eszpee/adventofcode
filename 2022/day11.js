@@ -1,5 +1,4 @@
-const input = readInput("./day11-sample.txt"); 
-const maxmonkeys = 3;
+const input = readInput("./day11.txt"); const maxmonkeys = 7; //should change together
 const rounds = 20;
 /* data structures:
 monkeys[] {
@@ -25,7 +24,7 @@ monkeys[] {
   print the multiplication of the two highest inspect levels for first solution
 */
 
-monkeys = new Array();               //it's a competition, not for display! :D
+var monkeys = new Array();               //it's a competition, not for display! :D
 for (var i=0;i<=maxmonkeys;i++) {
   monkeys[i] = {
     items: [],
@@ -38,6 +37,7 @@ for (var i=0;i<=maxmonkeys;i++) {
 
 var currentmonkey = -1;
 for (var i = 0; i<input.length;i++) {
+  line = input[i];
 /*
 Monkey 0:
   Starting items: 79, 98
@@ -73,10 +73,64 @@ Monkey 0:
 }
 
 
+for (var round = 1; round <= rounds; round++) {
+  console.log('round',round);
+  for (var monkey = 0; monkey <= maxmonkeys; monkey++) {
+/*
+      loop for items
+        Monkey inspects an item with a worry level of 79.
+        Increase inspect counter for monkey
+        Worry level is multiplied by 19 to 1501.
+        Monkey gets bored with item. Worry level is divided by 3 to 500.
+        Current worry level is not divisible by 23.
+        Item with worry level 500 is thrown to monkey 3.
+
+*/
+    console.log('monkey',monkey,monkeys[monkey]);
+    while (monkeys[monkey].items.length > 0) {
+      var worry = monkeys[monkey].items.shift();
+      console.log('- item before operation',worry, 'operation',monkeys[monkey].operation);
+      monkeys[monkey].inspects++;
+      if (monkeys[monkey].operation.split(' ')[0] == '+') {
+        if (isNaN(Number(monkeys[monkey].operation.split(' ')[1]))) {
+          worry = worry + worry;
+        }
+        else {
+          worry += Number(monkeys[monkey].operation.split(' ')[1]);
+        }
+      }
+      else {
+        if (isNaN(Number(monkeys[monkey].operation.split(' ')[1]))) {
+          worry = worry * worry;
+        }
+        else {
+          worry = worry * Number(monkeys[monkey].operation.split(' ')[1]);
+        }
+      }
+      console.log('next step is', worry, '/3' );
+      worry = Math.floor(worry / 3);
+      console.log('result is ',worry, 'testing divisibility by',monkeys[monkey].test,'which is',worry/monkeys[monkey].test);
+      var throwto = 0;
+      if (worry % monkeys[monkey].test == 0) {
+        throwto = monkeys[monkey].throw.true;
+      }
+      else {
+        throwto = monkeys[monkey].throw.false;
+      }
+      console.log('- item after operation',worry,'goes to',throwto);
+      monkeys[throwto].items.push(worry);
+    }
+  }
+}
 
 console.log(monkeys);
+var count_inspects = new Array();
+monkeys.forEach(m => {
+  count_inspects.push(m.inspects);
 
-console.log('First part:');
+});
+count_inspects.sort((a, b) => b-a);
+console.log('First part:',count_inspects[0]*count_inspects[1]);
 console.log('Second part:');
 
 function readInput(filename) {
@@ -89,3 +143,4 @@ function readInput(filename) {
     console.error(err);
   }
 }
+

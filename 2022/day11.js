@@ -1,5 +1,5 @@
 const input = readInput("./day11-sample.txt"); const maxmonkeys = 3; //should change together
-const rounds = 20;
+const rounds = 50;
 /* data structures:
 monkeys[] {
   items:Array(),
@@ -43,6 +43,14 @@ for (var i=0;i<=maxmonkeys;i++) {
   }
 }
 
+var round_results = new Array();
+for (var i=1; i<=rounds;i++) {
+  round_results[i] = {
+    inspects: [],
+    delta_inspects: []
+  }
+}
+
 var currentmonkey = -1;
 for (var i = 0; i<input.length;i++) {
   line = input[i];
@@ -75,16 +83,6 @@ for (var i = 0; i<input.length;i++) {
 
 for (var round = 1; round <= rounds; round++) {
   for (var monkey = 0; monkey <= maxmonkeys; monkey++) {
-/*
-      loop for items
-        Monkey inspects an item with a worry level of 79.
-        Increase inspect counter for monkey
-        Worry level is multiplied by 19 to 1501.
-        Monkey gets bored with item. Worry level is divided by 3 to 500.
-        Current worry level is not divisible by 23.
-        Item with worry level 500 is thrown to monkey 3.
-
-*/
     while (monkeys[monkey].items.length > 0) {
       var worry = monkeys[monkey].items.shift();
       monkeys[monkey].inspects++;
@@ -115,7 +113,18 @@ for (var round = 1; round <= rounds; round++) {
       monkeys[throwto].items.push(worry);
     }
   }
+  for (var m=0;m<=maxmonkeys;m++) {
+    round_results[round].inspects[m] = monkeys[m].inspects;
+    if (round > 1) {
+      round_results[round].delta_inspects[m] = round_results[round].inspects[m] - round_results[round-1].inspects[m];
+    }
+    else {
+      round_results[round].delta_inspects[m] = round_results[round].inspects[m];
+    }
+  }
 }
+
+console.log(round_results);
 
 var count_inspects = new Array();
 monkeys.forEach(m => {

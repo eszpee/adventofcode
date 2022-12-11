@@ -10,7 +10,6 @@ monkeys[] {
   inspects: 0
 }
 */ 
-
 /* algo:
   process input to create monkeys[]
   loop for rounds (20)

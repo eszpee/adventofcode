@@ -1,4 +1,4 @@
-const input = readInput("./day11.txt"); const maxmonkeys = 7; //should change together
+const input = readInput("./day11-sample.txt"); const maxmonkeys = 3; //should change together
 const rounds = 20;
 /* data structures:
 monkeys[] {
@@ -22,6 +22,14 @@ monkeys[] {
         Current worry level is not divisible by 23.
         Item with worry level 500 is thrown to monkey 3.
   print the multiplication of the two highest inspect levels for first solution
+
+  algo day 2:
+    - add to round_results[] array after every round:
+        inspects[]          //number of inspections for every monkey
+        delta_inspects[]    //difference in number of inspections for every monkey
+    - check for a few hundred rounds and see if there's any pattern... namely, same amount of delta after x round
+    - calculate for 10000 rounds: start+(10000/cycle)*diff, or something like that
+    - multiply highest two
 */
 
 var monkeys = new Array();               //it's a competition, not for display! :D
@@ -96,7 +104,7 @@ for (var round = 1; round <= rounds; round++) {
           worry = worry * Number(monkeys[monkey].operation.split(' ')[1]);
         }
       }
-      worry = Math.floor(worry / 3);
+      //worry = Math.floor(worry / 3);
       var throwto = 0;
       if (worry % monkeys[monkey].test == 0) {
         throwto = monkeys[monkey].throw.true;

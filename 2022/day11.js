@@ -1,5 +1,5 @@
 const input = readInput("./day11-sample.txt"); const maxmonkeys = 3; //should change together
-const rounds = 50;
+const rounds = 10000;
 /* data structures:
 monkeys[] {
   items:Array(),
@@ -124,7 +124,12 @@ for (var round = 1; round <= rounds; round++) {
   }
 }
 
-console.log(round_results);
+//console.log(round_results);
+console.log(1,round_results[1]);
+console.log(20,round_results[20]);
+console.log(1000,round_results[1000]);
+console.log(2000,round_results[2000]);
+console.log(10000,round_results[10000]);
 
 var count_inspects = new Array();
 monkeys.forEach(m => {

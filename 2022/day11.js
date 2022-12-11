@@ -38,14 +38,6 @@ for (var i=0;i<=maxmonkeys;i++) {
 var currentmonkey = -1;
 for (var i = 0; i<input.length;i++) {
   line = input[i];
-/*
-Monkey 0:
-  Starting items: 79, 98
-  Operation: new = old * 19
-  Test: divisible by 23
-    If true: throw to monkey 2
-    If false: throw to monkey 3
-*/
   if (line.charAt(0) == 'M') {
     currentmonkey++;        //assume monkeys are in order...
   }
@@ -74,7 +66,6 @@ Monkey 0:
 
 
 for (var round = 1; round <= rounds; round++) {
-  console.log('round',round);
   for (var monkey = 0; monkey <= maxmonkeys; monkey++) {
 /*
       loop for items
@@ -86,10 +77,8 @@ for (var round = 1; round <= rounds; round++) {
         Item with worry level 500 is thrown to monkey 3.
 
 */
-    console.log('monkey',monkey,monkeys[monkey]);
     while (monkeys[monkey].items.length > 0) {
       var worry = monkeys[monkey].items.shift();
-      console.log('- item before operation',worry, 'operation',monkeys[monkey].operation);
       monkeys[monkey].inspects++;
       if (monkeys[monkey].operation.split(' ')[0] == '+') {
         if (isNaN(Number(monkeys[monkey].operation.split(' ')[1]))) {
@@ -107,9 +96,7 @@ for (var round = 1; round <= rounds; round++) {
           worry = worry * Number(monkeys[monkey].operation.split(' ')[1]);
         }
       }
-      console.log('next step is', worry, '/3' );
       worry = Math.floor(worry / 3);
-      console.log('result is ',worry, 'testing divisibility by',monkeys[monkey].test,'which is',worry/monkeys[monkey].test);
       var throwto = 0;
       if (worry % monkeys[monkey].test == 0) {
         throwto = monkeys[monkey].throw.true;
@@ -117,17 +104,14 @@ for (var round = 1; round <= rounds; round++) {
       else {
         throwto = monkeys[monkey].throw.false;
       }
-      console.log('- item after operation',worry,'goes to',throwto);
       monkeys[throwto].items.push(worry);
     }
   }
 }
 
-console.log(monkeys);
 var count_inspects = new Array();
 monkeys.forEach(m => {
   count_inspects.push(m.inspects);
-
 });
 count_inspects.sort((a, b) => b-a);
 console.log('First part:',count_inspects[0]*count_inspects[1]);

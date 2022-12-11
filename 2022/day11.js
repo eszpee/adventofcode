@@ -1,4 +1,4 @@
-const input = readInput("./day11.txt"); const maxmonkeys = 7; //should change together
+const input = readInput("./day11-sample.txt"); const maxmonkeys = 3; //should change together
 const rounds = 20;
 /* data structures:
 monkeys[] {

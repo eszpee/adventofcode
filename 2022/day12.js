@@ -1,8 +1,8 @@
 const path = require('path');
 
-const input = readInput("./day12.txt");
-const Epos = {  x: 59, y : 21 };
-//const Epos = { x: 5, y: 2 };
+const input = readInput("./day12-sample.txt");
+//const Epos = {  x: 59, y : 21 };
+const Epos = { x: 5, y: 2 };
 const distWeight = 10;
 
 const includesArray = (data, arr) => {
@@ -34,16 +34,16 @@ const includesArray = (data, arr) => {
 */
 
 var atlas = new Array();
-var pathmap = new Array(); //stores shortest paths to points on map found
 var paths = new Array();
 var valid_paths = new Array();
 var sortest_found = Infinity;
+var pathmap = Array(input[0].length).fill(null).map(()=>Array(input.length).fill(Infinity))
+
 
 for (var i = 0; i<input.length;i++) {
   atlas.push(input[i].split(''));
   if (input[i].charAt(0) == 'S') {
     paths.push({x:0, y:i, length : 1, visited:[[i,0]]});
-    pathmap[x][y] = Infinity;
   }
 }
 //console.log(atlas);

@@ -153,7 +153,7 @@ while (currstep = paths.shift()) {
   }  
   // sort paths array to have the shortest + closest to end at the beginning
 //  console.log('BEFORE SORTING',paths);
-  paths.sort((b,a) => a.length+distance([a.x,a.y],[Epos.x,Epos.y]) - b.length+distance([b.x,b.y],[Epos.x,Epos.y]));
+  paths.sort((a,b) => a.length+distance([a.x,a.y],[Epos.x,Epos.y]) - b.length+distance([b.x,b.y],[Epos.x,Epos.y]));
 //  console.log('AFTER SORTING',paths);
 }
 

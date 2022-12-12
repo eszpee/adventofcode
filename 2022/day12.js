@@ -1,7 +1,7 @@
+const input = readInput("./day12.txt");
 const includesArray = (data, arr) => {
   return data.some(e => Array.isArray(e) && e.every((o, i) => Object.is(arr[i], o)));
 }
-const input = readInput("./day12-sample.txt");
 /* data structures:
   map[][] = 'a'       //map
   paths[] = {
@@ -10,7 +10,8 @@ const input = readInput("./day12-sample.txt");
     length : 1        //length of path so far
   }
   valid_paths[] = {
-    length = 3232     //length of valid path
+    length : 3232     //length of valid path
+    path : [(1,2),(1,2)] //path
   }
 */ 
 /* algo:
@@ -37,20 +38,27 @@ for (var i = 0; i<input.length;i++) {
   }
 }
 //console.log(atlas);
-const maxX = input[0].length-1;
-const maxY = input.length-1;
+const maxX = atlas[0].length-1;
+const maxY = atlas.length-1;
 var currstep;
 
 while (currstep = paths.shift()) {
-  console.log('current step',currstep);
+  console.log(currstep.x,currstep.y);
   var found = false;
   //right
   if (currstep.x < maxX && 
     stepOK(atlas[currstep.y][currstep.x],atlas[currstep.y][currstep.x+1]) &&
     newPath(currstep.visited,[currstep.y,currstep.x+1]) 
     ) {
+//      console.log('right');
       if(atlas[currstep.y][currstep.x+1] == 'E') {
-        valid_paths.push(currstep.length+1);
+//        console.log('arrived!');
+        valid_paths.push(
+          {
+            length: currstep.length,
+            path: currstep.visited
+          }
+        );
       }
       else {
         after = {
@@ -59,7 +67,7 @@ while (currstep = paths.shift()) {
           length : currstep.length+1, 
           visited:[...currstep.visited,[currstep.y,currstep.x+1]]
         };
-        console.log('pushing after:',after);
+//        console.log('pushing after:',after);
         paths.push(after);
       }
   }
@@ -68,8 +76,15 @@ while (currstep = paths.shift()) {
     stepOK(atlas[currstep.y][currstep.x],atlas[currstep.y][currstep.x-1]) &&
     newPath(currstep.visited,[currstep.y,currstep.x-1]) 
     ) {
+//      console.log('left');
       if(atlas[currstep.y][currstep.x-1] == 'E') {
-        valid_paths.push(currstep.length+1);
+//        console.log('arrived!');
+        valid_paths.push(
+          {
+            length: currstep.length,
+            path: currstep.visited
+          }
+        );
       }
       else {
         after = {
@@ -78,7 +93,7 @@ while (currstep = paths.shift()) {
           length : currstep.length+1, 
           visited:[...currstep.visited,[currstep.y,currstep.x-1]]
         };
-        console.log('pushing after:',after);
+//        console.log('pushing after:',after);
         paths.push(after);
       }
   }
@@ -87,8 +102,15 @@ while (currstep = paths.shift()) {
     stepOK(atlas[currstep.y][currstep.x],atlas[currstep.y+1][currstep.x]) &&
     newPath(currstep.visited,[currstep.y+1,currstep.x]) 
     ) {
+//      console.log('down');
       if(atlas[currstep.y+1][currstep.x] == 'E') {
-        valid_paths.push(currstep.length+1);
+//        console.log('arrived!');
+        valid_paths.push(
+          {
+            length: currstep.length,
+            path: currstep.visited
+          }
+        );
       }
       else {
         after = {
@@ -97,7 +119,7 @@ while (currstep = paths.shift()) {
           length : currstep.length+1, 
           visited:[...currstep.visited,[currstep.y+1,currstep.x]]
         };
-        console.log('pushing after:',after);
+//        console.log('pushing after:',after);
         paths.push(after);
       }
   }
@@ -106,8 +128,15 @@ while (currstep = paths.shift()) {
     stepOK(atlas[currstep.y][currstep.x],atlas[currstep.y-1][currstep.x]) &&
     newPath(currstep.visited,[currstep.y-1,currstep.x]) 
     ) {
+//      console.log('up');
       if(atlas[currstep.y-1][currstep.x] == 'E') {
-        valid_paths.push(currstep.length+1);
+//        console.log('arrived!');
+        valid_paths.push(
+          {
+            length: currstep.length,
+            path: currstep.visited
+          }
+        );
       }
       else {
         after = {
@@ -116,20 +145,21 @@ while (currstep = paths.shift()) {
           length : currstep.length+1, 
           visited:[...currstep.visited,[currstep.y-1,currstep.x]]
         };
-        console.log('pushing after:',after);
+//        console.log('pushing after:',after);
         paths.push(after);
       }
   }  
 }
 
-console.log(valid_paths);
+console.log(valid_paths.sort((a,b) => b-a)[0]);
 
-console.log('First part:',);
+console.log('First part:',valid_paths.sort((a,b) => b-a)[0].length);
 console.log('Second part:',);
 
 function stepOK(a,b) {
   //takes two chars
-  //returns if step is valid from a to b 
+  //returns if step is valid from a to b
+  if (b == 'E') {b = 'z'}; 
   if (a == 'S') { return true; }
   if (b.charCodeAt(0) -1 <= a.charCodeAt(0)) { return true; }
   return false;
@@ -137,9 +167,9 @@ function stepOK(a,b) {
 
 function newPath(steps,nextstep) {
   //takes steps array for previous steps, checks if nextstep was already in it
-  console.log('checking if ',nextstep,'is in',steps);
+  //console.log('checking if ',nextstep,'is in',steps);
   if (includesArray(steps,nextstep)) {
-    console.log('already visited');
+//    console.log(nextstep,'already visited');
     return false;
   }
   return true;

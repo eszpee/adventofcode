@@ -1,8 +1,9 @@
 const path = require('path');
 
-const input = readInput("./day12-sample.txt");
-//const Epos = {  x: 59, y : 21 };
-const Epos = { x: 5, y: 2 };
+const input = readInput("./day12.txt");
+const Epos = {  x: 59, y : 21 };
+//const Epos = { x: 5, y: 2 };
+const distWeight = 10;
 
 const includesArray = (data, arr) => {
   return data.some(e => Array.isArray(e) && e.every((o, i) => Object.is(arr[i], o)));
@@ -171,8 +172,8 @@ while (currstep = paths.shift()) {
   }  
   // sort paths array to have the shortest + closest to end at the beginning
 //  console.log('BEFORE SORTING',paths);
-  paths.filter(item => item.length >= sortest_found);
-  paths.sort((a,b) => a.length+distance([a.x,a.y],[Epos.x,Epos.y]) - b.length+distance([b.x,b.y],[Epos.x,Epos.y]));
+  //paths.filter(item => item.length >= sortest_found);
+  paths.sort((a,b) => a.length+distWeight*distance([a.x,a.y],[Epos.x,Epos.y]) - b.length+distWeight*distance([b.x,b.y],[Epos.x,Epos.y]));
 //  console.log('AFTER SORTING',paths);
 }
 

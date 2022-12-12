@@ -45,7 +45,7 @@ const maxY = atlas.length-1;
 var currstep;
 
 while (currstep = paths.shift()) {
-  console.log(currstep.x,currstep.y);
+  console.log('x:',currstep.x,'y:',currstep.y,'l:',currstep.length,'d:',distance([currstep.x,currstep.y],[Epos.x,Epos.y]));
   var found = false;
   //right
   if (currstep.x < maxX && 

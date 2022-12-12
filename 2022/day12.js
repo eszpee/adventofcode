@@ -1,8 +1,8 @@
 const path = require('path');
 
-const input = readInput("./day12-sample.txt");
-//const Epos = {  x: 59, y : 21 };
-const Epos = { x: 5, y: 2 };
+const input = readInput("./day12.txt");
+const Epos = {  x: 59, y : 21 };
+//const Epos = { x: 5, y: 2 };
 const distWeight = 10;
 
 const includesArray = (data, arr) => {

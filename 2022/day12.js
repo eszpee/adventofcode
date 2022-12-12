@@ -1,4 +1,6 @@
 const input = readInput("./day12.txt");
+const Epos = {  x: 59, y : 21 };
+
 const includesArray = (data, arr) => {
   return data.some(e => Array.isArray(e) && e.every((o, i) => Object.is(arr[i], o)));
 }
@@ -149,12 +151,20 @@ while (currstep = paths.shift()) {
         paths.push(after);
       }
   }  
+  // sort paths array to have the shortest + closest to end at the beginning
+//  console.log('BEFORE SORTING',paths);
+  paths.sort((b,a) => a.length+distance([a.x,a.y],[Epos.x,Epos.y]) - b.length+distance([b.x,b.y],[Epos.x,Epos.y]));
+//  console.log('AFTER SORTING',paths);
 }
 
 console.log(valid_paths.sort((a,b) => b-a)[0]);
 
 console.log('First part:',valid_paths.sort((a,b) => b-a)[0].length);
 console.log('Second part:',);
+
+function distance([a,b],[x,y]) {
+  return Math.sqrt((Math.abs(a-x)*Math.abs(a-x))+(Math.abs(b-y)*Math.abs(b-y)));
+}
 
 function stepOK(a,b) {
   //takes two chars

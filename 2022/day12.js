@@ -1,5 +1,8 @@
-const input = readInput("./day12.txt");
-const Epos = {  x: 59, y : 21 };
+const path = require('path');
+
+const input = readInput("./day12-sample.txt");
+//const Epos = {  x: 59, y : 21 };
+const Epos = { x: 5, y: 2 };
 
 const includesArray = (data, arr) => {
   return data.some(e => Array.isArray(e) && e.every((o, i) => Object.is(arr[i], o)));
@@ -32,6 +35,7 @@ const includesArray = (data, arr) => {
 var atlas = new Array();
 var paths = new Array();
 var valid_paths = new Array();
+var sortest_found = Infinity;
 
 for (var i = 0; i<input.length;i++) {
   atlas.push(input[i].split(''));
@@ -45,7 +49,8 @@ const maxY = atlas.length-1;
 var currstep;
 
 while (currstep = paths.shift()) {
-  console.log('x:',currstep.x,'y:',currstep.y,'l:',currstep.length,'d:',distance([currstep.x,currstep.y],[Epos.x,Epos.y]));
+  if (sortest_found <= currstep.length) { continue; }
+  console.log(sortest_found,'x:',currstep.x,'y:',currstep.y,'l:',currstep.length,'d:',distance([currstep.x,currstep.y],[Epos.x,Epos.y]));
   var found = false;
   //right
   if (currstep.x < maxX && 
@@ -55,6 +60,10 @@ while (currstep = paths.shift()) {
 //      console.log('right');
       if(atlas[currstep.y][currstep.x+1] == 'E') {
 //        console.log('arrived!');
+        if (sortest_found > currstep.length) {
+          sortest_found = currstep.length;
+        };
+
         valid_paths.push(
           {
             length: currstep.length,
@@ -81,6 +90,9 @@ while (currstep = paths.shift()) {
 //      console.log('left');
       if(atlas[currstep.y][currstep.x-1] == 'E') {
 //        console.log('arrived!');
+        if (sortest_found > currstep.length) {
+          sortest_found = currstep.length;
+        };
         valid_paths.push(
           {
             length: currstep.length,
@@ -107,7 +119,10 @@ while (currstep = paths.shift()) {
 //      console.log('down');
       if(atlas[currstep.y+1][currstep.x] == 'E') {
 //        console.log('arrived!');
-        valid_paths.push(
+          if (sortest_found > currstep.length) {
+            sortest_found = currstep.length;
+          };
+          valid_paths.push(
           {
             length: currstep.length,
             path: currstep.visited
@@ -133,6 +148,9 @@ while (currstep = paths.shift()) {
 //      console.log('up');
       if(atlas[currstep.y-1][currstep.x] == 'E') {
 //        console.log('arrived!');
+        if (sortest_found > currstep.length) {
+          sortest_found = currstep.length;
+        };
         valid_paths.push(
           {
             length: currstep.length,
@@ -153,13 +171,14 @@ while (currstep = paths.shift()) {
   }  
   // sort paths array to have the shortest + closest to end at the beginning
 //  console.log('BEFORE SORTING',paths);
+  paths.filter(item => item.length >= sortest_found);
   paths.sort((a,b) => a.length+distance([a.x,a.y],[Epos.x,Epos.y]) - b.length+distance([b.x,b.y],[Epos.x,Epos.y]));
 //  console.log('AFTER SORTING',paths);
 }
 
-console.log(valid_paths.sort((a,b) => b-a)[0]);
+console.log(valid_paths.sort((a,b) => a.length-b.length)[0]);
 
-console.log('First part:',valid_paths.sort((a,b) => b-a)[0].length);
+console.log('First part:',valid_paths.sort((a,b) => a.length-b.length)[0].length);
 console.log('Second part:',);
 
 function distance([a,b],[x,y]) {

@@ -34,6 +34,7 @@ const includesArray = (data, arr) => {
 */
 
 var atlas = new Array();
+var pathmap = new Array(); //stores shortest paths to points on map found
 var paths = new Array();
 var valid_paths = new Array();
 var sortest_found = Infinity;
@@ -42,6 +43,7 @@ for (var i = 0; i<input.length;i++) {
   atlas.push(input[i].split(''));
   if (input[i].charAt(0) == 'S') {
     paths.push({x:0, y:i, length : 1, visited:[[i,0]]});
+    pathmap[x][y] = Infinity;
   }
 }
 //console.log(atlas);
@@ -50,7 +52,9 @@ const maxY = atlas.length-1;
 var currstep;
 
 while (currstep = paths.shift()) {
-  if (sortest_found <= currstep.length) { continue; }
+  if ((sortest_found <= currstep.length) || (pathmap[currstep.x][currstep.y] < currstep.length))
+    { continue; }
+  pathmap[currstep.x][currstep.y] = currstep.length;
   console.log(paths.length,sortest_found,'x:',currstep.x,'y:',currstep.y,'l:',currstep.length,'d:',distance([currstep.x,currstep.y],[Epos.x,Epos.y]));
   var found = false;
   //right

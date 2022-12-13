@@ -1,5 +1,3 @@
-const path = require('path');
-
 const input = readInput("./day12.txt");
 const Epos = {  x: 59, y : 21 };
 //const Epos = { x: 5, y: 2 };
@@ -187,7 +185,8 @@ console.log('First part:',valid_paths.sort((a,b) => a.length-b.length)[0].length
 console.log('Second part:',);
 
 function distance([a,b],[x,y]) {
-  return Math.sqrt((Math.abs(a-x)*Math.abs(a-x))+(Math.abs(b-y)*Math.abs(b-y)));
+  //return Math.sqrt((Math.abs(a-x)*Math.abs(a-x))+(Math.abs(b-y)*Math.abs(b-y)));
+  return Math.abs(a-x)+Math.abs(b-y);
 }
 
 function stepOK(a,b) {

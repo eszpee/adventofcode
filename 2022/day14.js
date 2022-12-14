@@ -67,14 +67,9 @@ for (var line = 0; line<input.length;line++) {
 }
 
 var sandfalling = true; //there is at least one sand falling
+var howManySand = 0;
 
 while (sandfalling) {
-/*    draw map for debugging
-    drop + at 500
-    loop until there are + on map
-      move + down 
-      if + is reaching smallest or largest set sanfalling to false and exit from loop
-      if no move is possible, change + to o */
   var sandX = 500-minX+1;
   var sandY = 0;
   var thisSandFalls = true;
@@ -99,6 +94,7 @@ while (sandfalling) {
     }
     else {
       cave[sandY-1][sandX] = 'o';
+      howManySand++;
       thisSandFalls = false;
     }    
   }
@@ -108,7 +104,7 @@ while (sandfalling) {
 
 
 
-console.log('First part:',);
+console.log('First part:',howManySand);
 console.log('Second part:',);
 
 function drawCave (cave) {

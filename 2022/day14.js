@@ -43,7 +43,6 @@ for (var line = 0; line<input.length;line++) {
     //draw wall from coords[i-1] -> coords [i]
     var start = [Number(coords[coord-1].split(',')[1]),Number(coords[coord-1].split(',')[0])-minX+1];
     var end = [Number(coords[coord].split(',')[1]),Number(coords[coord].split(',')[0])-minX+1];
-    console.log('drawing wall from',start,'to',end);
     if (start[0] > end[0]) {
       for (var i = 0;i <= start[0]-end[0];i++) {
         cave[end[0]+i][start[1]]='#';
@@ -67,7 +66,46 @@ for (var line = 0; line<input.length;line++) {
   }
 }
 
-drawCave(cave);
+var sandfalling = true; //there is at least one sand falling
+
+while (sandfalling) {
+/*    draw map for debugging
+    drop + at 500
+    loop until there are + on map
+      move + down 
+      if + is reaching smallest or largest set sanfalling to false and exit from loop
+      if no move is possible, change + to o */
+  var sandX = 500-minX+1;
+  var sandY = 0;
+  var thisSandFalls = true;
+  while(thisSandFalls) {
+    cave[sandY][sandX] = '+';
+    drawCave(cave);
+    sandY++
+    if (sandY == maxY+1) {
+      thisSandFalls = false;
+      sandfalling = false;
+    }
+    else if (cave[sandY][sandX] == '.') {
+      cave[sandY-1][sandX] = '.';
+    }
+    else if(cave[sandY][sandX-1] == '.') {
+      cave[sandY-1][sandX] = '.';
+      sandX--;
+    }
+    else if(cave[sandY][sandX+1] == '.') {
+      cave[sandY-1][sandX] = '.';
+      sandX++;
+    }
+    else {
+      cave[sandY-1][sandX] = 'o';
+      thisSandFalls = false;
+    }    
+  }
+  drawCave(cave);
+}
+
+
 
 
 console.log('First part:',);

@@ -20,6 +20,7 @@ var minX=Infinity;
 var minY=Infinity;
 var maxX=0;
 var maxY=0;
+var extraSides = 800;
 for (var i = 0; i<input.length;i++) {
   const coords = input[i].split(' -> ');
   coords.forEach(c => {
@@ -31,10 +32,20 @@ for (var i = 0; i<input.length;i++) {
   });
 }
 
-//create wall (x size: maxx-minx+2, y size: maxy+3)
-const wallX = maxX-minX+2+1, wallY = maxY+1;
+minX = minX - extraSides;
+maxX = maxX + extraSides;
+maxY += 2;
+
+//create cave (x size: maxx-minx+2, y size: maxy+3)
+const caveX = maxX-minX+2+1, caveY = maxY+1;
 const value = '.';
-var cave = Array.from(Array(wallY), () => Array(wallX).fill(value));
+var cave = Array.from(Array(caveY), () => Array(caveX).fill(value));
+
+//draw bottom
+for (var i = 0;i <= maxX-minX+2;i++) {
+  cave[maxY][i]='#';
+}
+
 
 //draw rock walls
 for (var line = 0; line<input.length;line++) {
@@ -75,8 +86,8 @@ while (sandfalling) {
   var thisSandFalls = true;
   while(thisSandFalls) {
     cave[sandY][sandX] = '+';
+    sandY++  
     drawCave(cave);
-    sandY++
     if (sandY == maxY+1) {
       thisSandFalls = false;
       sandfalling = false;
@@ -96,6 +107,9 @@ while (sandfalling) {
       cave[sandY-1][sandX] = 'o';
       howManySand++;
       thisSandFalls = false;
+      if (sandY == 1) {
+        sandfalling = false;
+      }
     }    
   }
   drawCave(cave);

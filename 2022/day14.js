@@ -1,4 +1,4 @@
-const input = readInput("./day14.txt");
+const input = readInput("./day14-sample.txt");
 /* data structures:
 cave[y][x] = '#' - cave representation, from smallest minus one to largest plus one
 
@@ -15,12 +15,12 @@ cave[y][x] = '#' - cave representation, from smallest minus one to largest plus 
       if no move is possible, change + to o
   count o-s on map and write as first part    
 */
-
+const {execSync} = require('child_process');
 var minX=Infinity;
 var minY=Infinity;
 var maxX=0;
 var maxY=0;
-var extraSides = 800;
+var extraSides = 8;
 for (var i = 0; i<input.length;i++) {
   const coords = input[i].split(' -> ');
   coords.forEach(c => {
@@ -115,15 +115,14 @@ while (sandfalling) {
   drawCave(cave);
 }
 
-
-
-
-console.log('First part:',howManySand);
-console.log('Second part:',);
+//console.log('First part:',howManySand);
+//console.log('Second part:',);
 
 function drawCave (cave) {
-  return;
+//  return;
+  console.log('\033[2J');         //clear screen
   console.log(cave.map(line => line.join('')).join('\n'));
+  execSync('sleep 0.005'); // block process for a second.
 }
 
 function readInput(filename) {

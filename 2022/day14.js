@@ -30,12 +30,52 @@ for (var i = 0; i<input.length;i++) {
     if (cc[1] > maxY) { maxY = cc[1]; }
   });
 }
-console.log(minX,minY,maxX,maxY);
 
+//create wall (x size: maxx-minx+2, y size: maxy+3)
+const wallX = maxX-minX+2+1, wallY = maxY+1;
+const value = '.';
+var cave = Array.from(Array(wallY), () => Array(wallX).fill(value));
+
+//draw rock walls
+for (var line = 0; line<input.length;line++) {
+  var coords = input[line].split(' -> ');
+  for (var coord = 1;coord<coords.length;coord++) {
+    //draw wall from coords[i-1] -> coords [i]
+    var start = [Number(coords[coord-1].split(',')[1]),Number(coords[coord-1].split(',')[0])-minX+1];
+    var end = [Number(coords[coord].split(',')[1]),Number(coords[coord].split(',')[0])-minX+1];
+    console.log('drawing wall from',start,'to',end);
+    if (start[0] > end[0]) {
+      for (var i = 0;i <= start[0]-end[0];i++) {
+        cave[end[0]+i][start[1]]='#';
+      }
+    }
+    if (start[0] < end[0]) {
+      for (var i = 0;i <= end[0]-start[0];i++) {
+        cave[start[0]+i][start[1]]='#';
+      }
+    }
+    if (start[1] > end[1]) {
+      for (var i = 0;i <= start[1]-end[1];i++) {
+        cave[start[0]][end[1]+i]='#';
+      }
+    }
+    if (start[1] < end[1]) {
+      for (var i = 0;i <= end[1]-start[1];i++) {
+        cave[start[0]][start[1]+i]='#';
+      }
+    }
+  }
+}
+
+drawCave(cave);
 
 
 console.log('First part:',);
 console.log('Second part:',);
+
+function drawCave (cave) {
+  console.log(cave.map(line => line.join('')).join('\n'));
+}
 
 function readInput(filename) {
   const fs = require('fs');

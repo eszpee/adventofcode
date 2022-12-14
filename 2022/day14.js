@@ -1,4 +1,4 @@
-const input = readInput("./day14-sample.txt");
+const input = readInput("./day14.txt");
 /* data structures:
 cave[y][x] = '#' - cave representation, from smallest minus one to largest plus one
 
@@ -108,6 +108,7 @@ console.log('First part:',howManySand);
 console.log('Second part:',);
 
 function drawCave (cave) {
+  return;
   console.log(cave.map(line => line.join('')).join('\n'));
 }
 

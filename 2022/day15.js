@@ -10,15 +10,9 @@ const row_to_check = 2000000;
 
 var sensors = new Array();
 for (var i = 0; i<input.length;i++) {
-  sensors.push(input[i].split(':').map(x => x.match(/([\-\d]+)/g))-1);
+  sensors.push(input[i].split(':').map(x => x.match(/([\-\d]+)/g)));
 }
-/*
-#################.###########
-###S#############.###########
 
-###########################
-####B######################
-*/
 var smallestX = Infinity;
 var highestX = -Infinity;
 var dotsToDraw = new Array();
@@ -32,7 +26,7 @@ for (var i=0; i<sensors.length; i++) {
   if (smallestX > beaconX) { smallestX = beaconX; }
   if (highestX < sensorX) { highestX = sensorX; }
   if (highestX < beaconX) { highestX = beaconX; }
-  console.log (sensors[i], distance);
+  //console.log (sensors[i], distance);
 
   var cx = '';
   var dx = '';
@@ -59,7 +53,7 @@ for (var i=0; i<dotsToDraw.length; i++) {
   for (var d=dotsToDraw[i][0]; d<=dotsToDraw[i][1]; d++ ) {logPoint(d);}
 }
 
-console.log('First part:',checkedRow.join('').match(/\#/g).length);
+console.log('First part:',checkedRow.join('').match(/\#/g).length-1);
 console.log('Second part:',);
 
 function logPoint(x) {

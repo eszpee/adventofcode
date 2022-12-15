@@ -54,7 +54,7 @@ input.forEach(line => {
 drawRope('Result: '+visited.size);
 
 function drawRope(msg) {
-  const squaresize = 30;
+  const squaresize = 40;
   const offset = Math.floor(squaresize/2);
   console.log('\033[2J');         //clear screen
   console.log(msg,'\n');
@@ -74,7 +74,7 @@ function drawRope(msg) {
     }
     console.log(out.join('\n'));
     console.log('\n');
-    execSync('sleep 0.001'); // block process for a second.
+    execSync('sleep 0.005'); // block process for a second.
   }
 }
 
@@ -84,7 +84,7 @@ function followHead(h,msg) {
   //moves tail after head and records visited coordinates
   //console.log('checking rope knot',h,'rope before move:', rope);
   if (touching(h)) { 
-    msg += ' touching';
+    //msg += ' touching';
     //console.log('touching');
   }
   else {

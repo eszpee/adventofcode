@@ -6,12 +6,14 @@ const input = readInput("./day15-sample.txt");
 
 */
 
+sensors = new Array();
 for (var i = 0; i<input.length;i++) {
-  line = input[i];
-
+  sensors.push(input[i].split(':').map(x => x.match(/([\-\d]+)/g)));
 }
 
-console.log('First part:',);
+
+
+console.log('First part:',sensors);
 console.log('Second part:',);
 
 function readInput(filename) {

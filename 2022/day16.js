@@ -1,4 +1,4 @@
-const input = readInput("./day16.txt");
+const input = readInput("./day16-sample.txt");
 /* data structures:
 valves[
   AA: { rate: 0, leads: [ 'DD', 'II', 'BB' ] },
@@ -30,15 +30,13 @@ for (var i = 0; i<input.length;i++) {
 }
 var iterations = 0;
 var maxSteamout = 0;
-var abandon = false;
-while (!abandon) { //(maxSteamout < 1650){
+while (true) { //(maxSteamout < 1650){
   iterations++;
   //close all valves...
   Object.keys(valves).forEach(v => {valves[v].closed = true;});
   var timer = 1;
   var room = 'AA';
   var steamout = 0;
-  var halftime = 0;
   while (timer <= 30) {
 //    console.log('\n== Minute %s ==',timer);
     Object.keys(valves).forEach(v => {
@@ -69,16 +67,8 @@ while (!abandon) { //(maxSteamout < 1650){
     maxSteamout = steamout;
     console.log('Highest now:',maxSteamout);
   }
-  if (halftime < steamout) {
-    halftime = steamout;
-  }
-  if (timer == 15) {
-    if (steamout<halftime) {
-      abandon = true;
-    }
-  }
-  if (iterations % 100000 == 0) {
-    console.log('Iterations so far:',iterations,'Highest now:',maxSteamout);
+  if (iterations % 1000000 == 0) {
+    console.log('Iterations so far:',iterations/1000000,' million. Highest now:',maxSteamout);
   }
 }
 console.log('First part:',maxSteamout,'(in',iterations,'iterations)');

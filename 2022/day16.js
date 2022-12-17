@@ -28,30 +28,37 @@ for (var i = 0; i<input.length;i++) {
 }
 
 var maxSteamout = 0;
-while (maxSteamout < 1){ //1651) {
+while (maxSteamout < 1651){ //1651) {
+  //close all valves...
+  Object.keys(valves).forEach(v => {valves[v].closed = true;});
   var timer = 1;
   var room = 'AA';
   var steamout = 0;
-  while (timer < 30) {
-    //add released steam from all open valves
-    Object.values(valves).forEach(v => {
-      if (!v.closed) {
-        console.log('Open valve:',v);
-        steamout+= v.rate
-        console.log('Steam out',steamout)
+  while (timer <= 30) {
+//    console.log('\n== Minute %s ==',timer);
+    Object.keys(valves).forEach(v => {
+      if (!valves[v].closed) {
+//        console.log('Valve %s is open, releasing %s pressure.',v,valves[v].rate);
+        steamout+= valves[v].rate
+//        console.log('Combined steam released: ',steamout)
       }
     });
+    if (steamout == 0) {
+//      console.log("No valves are open.");
+    }
     
     //we might decide to open the valve
     if (valves[room].closed && valves[room].rate > 0 && (Math.random() > valveRand)) {        
       timer++;
-      console.log(timer,'Opened valve');
       valves[room].closed = false;
+//      console.log('You open valve %s.',room);
     }
     // we should move to move
-    room = valves[room].leads[[Math.floor(Math.random() * valves[room].leads.length)]];           //TODO randomness!
-    timer++;
-    console.log(timer,'Moved');
+    else {
+      room = valves[room].leads[[Math.floor(Math.random() * valves[room].leads.length)]];
+      timer++;
+//      console.log('You move to valve %s.',room);
+    }
   }
   if (maxSteamout<steamout) {
     maxSteamout = steamout;

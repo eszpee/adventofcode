@@ -18,17 +18,20 @@ valves[
 */
 var valves = new Array();
 const valveRand = 0.2;
+var maxrate = 0;
 for (var i = 0; i<input.length;i++) {
   var currValve = new Object();
   line = input[i];
   currValve.rate = Number(line.match(/=(\d+);/)[1]);
+  if (maxrate < currValve.rate) {maxrate = currValve.rate;}
   currValve.leads = line.split(/valves? /)[1].split(', ');
   currValve.closed = true;
   valves [line.match(/Valve ([A-Z]{2})/)[1]] = currValve;
 }
-
+var iterations = 0;
 var maxSteamout = 0;
-while (maxSteamout < 1651){ //1651) {
+while (maxSteamout < 1650){ //1651) {
+  iterations++;
   //close all valves...
   Object.keys(valves).forEach(v => {valves[v].closed = true;});
   var timer = 1;
@@ -48,12 +51,12 @@ while (maxSteamout < 1651){ //1651) {
     }
     
     //we might decide to open the valve
-    if (valves[room].closed && valves[room].rate > 0 && (Math.random() > valveRand)) {        
+    if (valves[room].closed && valves[room].rate > 0 && (Math.random() > (1/valves[room].rate))) {        
       timer++;
       valves[room].closed = false;
 //      console.log('You open valve %s.',room);
     }
-    // we should move to move
+    // we should move 
     else {
       room = valves[room].leads[[Math.floor(Math.random() * valves[room].leads.length)]];
       timer++;
@@ -64,8 +67,11 @@ while (maxSteamout < 1651){ //1651) {
     maxSteamout = steamout;
     console.log('Highest now:',maxSteamout);
   }
+  if (iterations % 1000000 == 0) {
+    console.log('Iterations so far:',iterations);
+  }
 }
-console.log('First part:',maxSteamout);
+console.log('First part:',maxSteamout,'(in',iterations,'iterations)');
 console.log('Second part:',);
 
 function readInput(filename) {

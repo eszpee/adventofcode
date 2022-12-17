@@ -1,4 +1,4 @@
-const input = readInput("./day16-sample.txt");
+const input = readInput("./day16.txt");
 /* data structures:
 valves[
   AA: { rate: 0, leads: [ 'DD', 'II', 'BB' ] },
@@ -68,7 +68,7 @@ while (true) { //(maxSteamout < 1650){
     console.log('Highest now:',maxSteamout);
   }
   if (iterations % 1000000 == 0) {
-    console.log('Iterations so far:',iterations/1000000,' million. Highest now:',maxSteamout);
+    console.log('Iterations so far:',iterations/1000000,'million. Highest now:',maxSteamout);
   }
 }
 console.log('First part:',maxSteamout,'(in',iterations,'iterations)');

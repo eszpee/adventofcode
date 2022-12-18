@@ -1,4 +1,4 @@
-const input = readInput("./day16-sample.txt");
+const input = readInput("./day16.txt");
 /* data structures:
 valves[
   AA: { rate: 0, leads: [ 'DD', 'II', 'BB' ] },

@@ -1,4 +1,4 @@
-const input = readInput("./day16.txt");
+const input = readInput("./day16-sample.txt");
 /* data structures:
 valves[
   AA: { rate: 0, leads: [ 'DD', 'II', 'BB' ] },
@@ -35,9 +35,10 @@ while (true) { //(maxSteamout < 1650){
   //close all valves...
   Object.keys(valves).forEach(v => {valves[v].closed = true;});
   var timer = 1;
-  var room = 'AA';
+  var roomMe = 'AA';
+  var roomEl = 'AA';
   var steamout = 0;
-  while (timer <= 30) {
+  while (timer <= 26) {
 //    console.log('\n== Minute %s ==',timer);
     Object.keys(valves).forEach(v => {
       if (!valves[v].closed) {
@@ -49,20 +50,30 @@ while (true) { //(maxSteamout < 1650){
     if (steamout == 0) {
 //      console.log("No valves are open.");
     }
-    
-    //we might decide to open the valve
-    if (valves[room].closed && valves[room].rate > 0 && (Math.random() > (1/valves[room].rate))) {        
-      timer++;
-      valves[room].closed = false;
+
+    //One minute passes
+    timer++;
+
+    //During the minute I might decide to open the valve
+    if (valves[roomMe].closed && valves[roomMe].rate > 0 && (Math.random() > (1/valves[roomMe].rate))) {        
+      valves[roomMe].closed = false;
 //      console.log('You open valve %s.',room);
     }
-    // we should move 
+    //Or I might move 
     else {
-      room = valves[room].leads[[Math.floor(Math.random() * valves[room].leads.length)]];
-      timer++;
+      roomMe = valves[roomMe].leads[[Math.floor(Math.random() * valves[roomMe].leads.length)]];
 //      console.log('You move to valve %s.',room);
     }
+
+    //Also the elephant does the same...
+    if (valves[roomEl].closed && valves[roomEl].rate > 0 && (Math.random() > (1/valves[roomEl].rate))) {        
+      valves[roomEl].closed = false;
+    }
+    else {
+      roomEl = valves[roomEl].leads[[Math.floor(Math.random() * valves[roomEl].leads.length)]];
+    }
   }
+
   if (maxSteamout<steamout) {
     maxSteamout = steamout;
     console.log('Highest now:',maxSteamout);

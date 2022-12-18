@@ -1,4 +1,4 @@
-const input = readInput("./day18-sample.txt");
+const input = readInput("./day18.txt");
 /* data structures:
   cubes[x,y,z];
 */ 

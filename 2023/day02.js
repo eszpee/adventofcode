@@ -35,7 +35,7 @@ const ColorsMax = {
 let gamesMaxColors = [];
 for (var i = 0; i<input.length;i++) {
   line = input[i];
-  //it doesn't matter which reveal there's max color, we just need to find the highest number of each color
+  //we just need to find the highest number of each color
 
   let currentMaxes = {
     red: 0,
@@ -72,7 +72,7 @@ for (var i = 0; i<input.length;i++) {
 
   gamesMaxColors.push(currentMaxes);
 }
-console.log('Max colors in each game:', gamesMaxColors);
+//console.log('Max colors in each game:', gamesMaxColors);
 
 // first part
 let gameID = 1;

@@ -1,4 +1,4 @@
-const input = readInput("./day02-sample.txt");
+const input = readInput("./day02.txt");
 /* data structures:
 Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
 Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
@@ -74,6 +74,7 @@ for (var i = 0; i<input.length;i++) {
 }
 console.log('Max colors in each game:', gamesMaxColors);
 
+// first part
 let gameID = 1;
 let PossibleGames = 0;
 for (const game of gamesMaxColors) {
@@ -83,9 +84,15 @@ for (const game of gamesMaxColors) {
   gameID++;
 }
 
+//second part
+let gamePowers = 0;
+for (const game of gamesMaxColors) {
+  gamePowers += game['red'] * game['green'] * game['blue'];
+}
+
 
 console.log('First part:',PossibleGames);
-console.log('Second part:',);
+console.log('Second part:',gamePowers);
 
 function readInput(filename) {
   const fs = require('fs');

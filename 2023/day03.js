@@ -1,3 +1,5 @@
+const { on } = require('events');
+
 const input = readInput("./day03-sample.txt");
 /* data structures:
 const schematic = [
@@ -24,16 +26,59 @@ Iterate over schematic
 */
 
 let schematic = [];
-
-for (var i = 0; i<input.length;i++) {
+for (var i = 0; i < input.length; i++) {
   line = input[i];
   schematic.push(line.split(''));
 }
 
-console.log(schematic);
+let sumOfNumbers = 0;
 
-console.log('First part:',);
+for (let row = 0; row < schematic.length; row++) {
+  const line = schematic[row];
+  let currentNumber = '';
+  let ongoingNumber = false;
+  for (let col = 0; col < line.length; col++) {
+    const item = line[col];
+    if (!isNaN(parseInt(item)) && item.length === 1) {
+      //we found a number
+      ongoingNumber = true;
+      currentNumber += item;
+      continue;
+    }
+    else if (ongoingNumber) {
+      //we just finished a number, check validity
+      console.log('found number', currentNumber, 'at', row, col);
+      if (isValidNumber(currentNumber, row, col)) {
+        sumOfNumbers += parseInt(currentNumber, 10);
+      }
+      currentNumber = '';
+      ongoingNumber = false;
+    }
+  }
+  //end of line, need to check if we have a number
+  if (ongoingNumber) {
+    //we just finished a number, check validity
+    console.log('found number', currentNumber, 'at', row, col);
+    if (isValidNumber(currentNumber, row, col)) {
+      sumOfNumbers += parseInt(currentNumber, 10);
+    }
+    currentNumber = '';
+    ongoingNumber = false;
+  }
+}
+//console.log(schematic);
+
+
+
+console.log('First part:',sumOfNumbers);
 console.log('Second part:',);
+
+function isValidNumber(number, row, col) {
+
+  return true;
+}
+
+
 
 function readInput(filename) {
   const fs = require('fs');

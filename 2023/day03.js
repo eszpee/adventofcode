@@ -73,8 +73,28 @@ for (let row = 0; row < schematic.length; row++) {
 console.log('First part:',sumOfNumbers);
 console.log('Second part:',);
 
-function isValidNumber(number, row, col) {
+function isValidNumber(number, row, endCol) {
+  endCol = endCol - 1;
+  const startCol = endCol - number.length + 1;
+  console.log('checking validity of number', number, 'at', row, startCol);
 
+  // check character before
+  if ((startCol > 0) && (schematic[row][startCol-1] !== '.')) {
+    console.log('character before is not dot')
+    return false;
+  }
+
+  // check character after
+  if ((startCol+endCol < schematic[row].length) && (schematic[row][endCol+1] !== '.')) {
+    console.log('character after is not dot')
+    return false;
+  }
+
+  // if row is larger than 0, check if previous row is valid
+
+  // if row is smaller than schematic.length, check if next row is valid
+
+  console.log('number is valid');
   return true;
 }
 

@@ -1,6 +1,6 @@
 const { on } = require('events');
 
-const input = readInput("./day03-sample.txt");
+const input = readInput("./day03.txt");
 /* data structures:
 const schematic = [
   // array of arrays of characters
@@ -32,6 +32,7 @@ for (var i = 0; i < input.length; i++) {
 }
 
 let sumOfNumbers = 0;
+let visualization = [];
 
 for (let row = 0; row < schematic.length; row++) {
   const line = schematic[row];
@@ -47,26 +48,38 @@ for (let row = 0; row < schematic.length; row++) {
     }
     else if (ongoingNumber) {
       //we just finished a number, check validity
-      console.log('found number', currentNumber, 'at', row, col);
+      console.log('\nfound number', currentNumber, 'at', row, col);
       if (!isNonadjacentNumber(currentNumber, row, col)) {
         sumOfNumbers += parseInt(currentNumber, 10);
+        visualization[row] += "■".repeat(currentNumber.length);
+      }
+      else {
+        visualization[row] += currentNumber;
       }
       currentNumber = '';
       ongoingNumber = false;
+
+      //add number of blocks to visualizations
     }
+    //we found a dot or a symbol, just copy to visualizations
+    visualization[row] += item;
   }
   //end of line, need to check if we have a number
   if (ongoingNumber) {
     //we just finished a number, check validity
-    console.log('found number', currentNumber, 'at', row, col);
-    if (!isNonadjacentNumber(currentNumber, row, col)) {
+    console.log('\nfound number', currentNumber, 'at', row, line.length);
+    if (!isNonadjacentNumber(currentNumber, row, line.length)) {
       sumOfNumbers += parseInt(currentNumber, 10);
+      visualization[row] += "■".repeat(currentNumber.length);
+    }
+    else {
+      visualization[row] += currentNumber;
     }
     currentNumber = '';
     ongoingNumber = false;
   }
 }
-//console.log(schematic);
+console.log(visualization.join('\n'));
 
 
 
@@ -85,7 +98,7 @@ function isNonadjacentNumber(number, row, endCol) {
   }
 
   // check character after
-  if ((startCol+endCol < schematic[row].length) && (schematic[row][endCol+1] !== '.')) {
+  if ((endCol+1 < schematic[row].length) && (schematic[row][endCol+1] !== '.')) {
     console.log('\tcharacter after is not dot')
     return false;
   }
@@ -102,7 +115,7 @@ function isNonadjacentNumber(number, row, endCol) {
   }
 
   // if row is smaller than schematic.length, check if next row is valid
-  if (row < schematic.length) {
+  if (row < schematic.length-1) {
     const nextRow = schematic[row+1];
     for (let col = startCol-1; col <= endCol+1; col++) {
       if ((col > 0) && (col < nextRow.length) && nextRow[col] !== '.') {
@@ -114,7 +127,7 @@ function isNonadjacentNumber(number, row, endCol) {
 
 
 
-  console.log('number is valid');
+  console.log('number is not adjacent to symbols');
   return true;
 }
 

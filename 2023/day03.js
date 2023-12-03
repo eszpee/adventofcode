@@ -48,7 +48,7 @@ for (let row = 0; row < schematic.length; row++) {
     else if (ongoingNumber) {
       //we just finished a number, check validity
       console.log('found number', currentNumber, 'at', row, col);
-      if (isValidNumber(currentNumber, row, col)) {
+      if (!isNonadjacentNumber(currentNumber, row, col)) {
         sumOfNumbers += parseInt(currentNumber, 10);
       }
       currentNumber = '';
@@ -59,7 +59,7 @@ for (let row = 0; row < schematic.length; row++) {
   if (ongoingNumber) {
     //we just finished a number, check validity
     console.log('found number', currentNumber, 'at', row, col);
-    if (isValidNumber(currentNumber, row, col)) {
+    if (!isNonadjacentNumber(currentNumber, row, col)) {
       sumOfNumbers += parseInt(currentNumber, 10);
     }
     currentNumber = '';
@@ -73,26 +73,46 @@ for (let row = 0; row < schematic.length; row++) {
 console.log('First part:',sumOfNumbers);
 console.log('Second part:',);
 
-function isValidNumber(number, row, endCol) {
+function isNonadjacentNumber(number, row, endCol) {
   endCol = endCol - 1;
   const startCol = endCol - number.length + 1;
   console.log('checking validity of number', number, 'at', row, startCol);
 
   // check character before
   if ((startCol > 0) && (schematic[row][startCol-1] !== '.')) {
-    console.log('character before is not dot')
+    console.log('\tcharacter before is not dot')
     return false;
   }
 
   // check character after
   if ((startCol+endCol < schematic[row].length) && (schematic[row][endCol+1] !== '.')) {
-    console.log('character after is not dot')
+    console.log('\tcharacter after is not dot')
     return false;
   }
 
   // if row is larger than 0, check if previous row is valid
+  if (row > 0) {
+    const previousRow = schematic[row-1];
+    for (let col = startCol-1; col <= endCol+1; col++) {
+      if ((col > 0) && (col < previousRow.length) && previousRow[col] !== '.') {
+        console.log('\tcharacter somewhere above is not dot')
+        return false;
+      }
+    }
+  }
 
   // if row is smaller than schematic.length, check if next row is valid
+  if (row < schematic.length) {
+    const nextRow = schematic[row+1];
+    for (let col = startCol-1; col <= endCol+1; col++) {
+      if ((col > 0) && (col < nextRow.length) && nextRow[col] !== '.') {
+        console.log('\tcharacter somewhere below is not dot')
+        return false;
+      }
+    }
+  }
+
+
 
   console.log('number is valid');
   return true;

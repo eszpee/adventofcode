@@ -14,15 +14,53 @@ const part1 = (rawInput) => {
 const part2 = (rawInput) => {
   const input = parseInput(rawInput);
   var safes = 0;
-  input.split('\n').forEach(line => {
+  input.split('\n').forEach(line => {    
+//    console.log("====================\nNew line:\n",line);
     if (isSafe(line)[0]) {
+//      console.log("Safe.");
       safes++;
     }
     else {
-
+      console.log("====================\nNew line:\n",line);
+      var offendingIndex = isSafe(line)[1];
+      console.log("Not safe for first at index",offendingIndex);
+      const modifiedLine = line.split(' ').filter((_, index) => index !== offendingIndex).join(' ');
+      console.log("Trying modified line:\n",modifiedLine);
+      if (isSafe(modifiedLine)[0]) {
+        console.log("Safe.");
+        safes++;
+      }
+      else {
+        offendingIndex = isSafe(line)[1]+1;
+        console.log("Still not safe at index",offendingIndex);
+        let modifiedLine = line.split(' ').filter((_, index) => index !== offendingIndex).join(' ');
+        console.log("Finally trying modified line:\n",modifiedLine);
+        //console.log("found error: ",isSafe(line),"\noriginal line:",line,"\nmodified line",modifiedLine);
+        //console.log("final safety: ",isSafe(modifiedLine))
+        if (isSafe(modifiedLine)[0]) {
+          console.log("Safe.");
+          safes++;
+        }
+        else if (isSafe(line)[1] !== 0) {
+          console.log("Still not safe at index",isSafe(modifiedLine)[1]);
+          offendingIndex = isSafe(line)[1]-1;
+          console.log("Still not safe at index",offendingIndex);
+          modifiedLine = line.split(' ').filter((_, index) => index !== offendingIndex).join(' ');
+          console.log("Finally trying modified line:\n",modifiedLine);
+          //console.log("found error: ",isSafe(line),"\noriginal line:",line,"\nmodified line",modifiedLine);
+          //console.log("final safety: ",isSafe(modifiedLine))
+          if (isSafe(modifiedLine)[0]) {
+            console.log("Safe.");
+            safes++;
+          }
+          else {
+            console.log("Still not safe at index",isSafe(modifiedLine)[1]);
+          }
+        }
+      }
     }
   });
-  return safes;
+  return safes;s
 };
 
 //function to tell if a line is safe (meaning: values change in one direction and difference is max 3)
@@ -30,7 +68,7 @@ const part2 = (rawInput) => {
 function isSafe(line) {
   const values = line.split(' ').map(value => parseInt(value));
   if (values[0] === values[1]) {
-    return ([false,1]);
+    return ([false,0]);
   }
   var growing;
   if (values[0] < values[1]) {
@@ -42,13 +80,13 @@ function isSafe(line) {
   for (var i=0; i<values.length-1; i++) {
     if (growing) {
       if ((values[i+1] - values[i] > 3) || (values[i+1] - values[i] < 1)) {
-        return ([false,i+1]);
+        return ([false,i]);
       }
     }
     //not growing
     else { 
       if ((values[i] - values[i+1] > 3) || (values[i] - values[i+1] < 1)) {
-        return ([false,i+1]);
+        return ([false,i]);
       }
     }
   }

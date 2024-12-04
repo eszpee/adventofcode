@@ -47,8 +47,54 @@ const part1 = (rawInput) => {
 
 const part2 = (rawInput) => {
   const input = parseInput(rawInput);
+  const letters = input.split('\n');
+  const maxRow = letters.length;
+  const maxCol = letters[0].length;
+  // console.log(`Max Row: ${maxRow}, Max Col: ${maxCol}`);
+  let xmasSum = 0;
 
-  return;
+  function letterSearch(row,col,letter) {
+    // console.log(`Searching for letter ${letter} at row ${row}, col ${col}`);
+    if ((row < 0) || (col < 0)) { return false;}
+    if ((row >= maxRow) || (col > maxCol)) { return false;}
+    if (letters[row].charAt(col) === letter) {
+      return true;
+    }
+    return false;
+  }
+
+  for (let currentRow = 0; currentRow < maxRow; currentRow++) {
+    for (let currentCol = 0; currentCol < maxCol; currentCol++) {
+      if (letterSearch(currentRow,currentCol,'A')) {
+        if (
+          (letterSearch(currentRow-1,currentCol-1,'M')) &&
+          (letterSearch(currentRow+1,currentCol+1,'S')) &&
+          (letterSearch(currentRow-1,currentCol+1,'M')) &&
+          (letterSearch(currentRow+1,currentCol-1,'S'))
+        ) { xmasSum++; }
+        else if (
+          (letterSearch(currentRow-1,currentCol-1,'S')) &&
+          (letterSearch(currentRow+1,currentCol+1,'M')) &&
+          (letterSearch(currentRow-1,currentCol+1,'S')) &&
+          (letterSearch(currentRow+1,currentCol-1,'M'))
+        ) { xmasSum++; }
+        else if (
+          (letterSearch(currentRow-1,currentCol-1,'M')) &&
+          (letterSearch(currentRow+1,currentCol+1,'S')) &&
+          (letterSearch(currentRow-1,currentCol+1,'S')) &&
+          (letterSearch(currentRow+1,currentCol-1,'M'))
+        ) { xmasSum++; }
+        else if (
+          (letterSearch(currentRow-1,currentCol-1,'S')) &&
+          (letterSearch(currentRow+1,currentCol+1,'M')) &&
+          (letterSearch(currentRow-1,currentCol+1,'M')) &&
+          (letterSearch(currentRow+1,currentCol-1,'S'))
+        ) { xmasSum++; }
+      }
+    }
+  }
+
+  return xmasSum;
 };
 
 run({
@@ -73,10 +119,20 @@ MXMXAXMASX`,
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: 
+`.M.S......
+..A..MSMS.
+.M.S.MAA..
+..A.ASMSM.
+.M.S.M....
+..........
+S.S.S.S.S.
+.A.A.A.A..
+M.M.M.M.M.
+..........`,
+        expected: 9,
+      },
     ],
     solution: part2,
   },
